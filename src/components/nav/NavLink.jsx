@@ -20,11 +20,11 @@ const NavLink = ({ id, name, type = "category", children = [] }) => {
   ));
 
   return (
-    <li className="border-[#ececec] border-b-[1px] overflow-hidden">
+    <li className="border-[#ececec] border-b-[1px] md:border-b-0 overflow-hidden md:flex md:items-center md:px-[2rem]">
       <Link
         to={`${type}/${id}`}
-        onClick={handleClick}
-        className="block w-[100%] p-[2rem] text-[1.4rem] uppercase font-[600] tracking-[0.13rem] "
+        onClick={window.innerWidth < 768 ? handleClick : undefined}
+        className="block w-[100%] p-[2rem] md:p-0 text-[1.4rem] uppercase font-[600] tracking-[0.13rem] md:text-center"
       >
         {name}
       </Link>
@@ -35,7 +35,7 @@ const NavLink = ({ id, name, type = "category", children = [] }) => {
           timeout={300}
           unmountOnExit
         >
-          <ul className="ml-[2.4rem] overflow-hidden">{childList}</ul>
+          <ul className="ml-[2.4rem] overflow-hidden md:hidden">{childList}</ul>
         </CSSTransition>
       }
     </li>

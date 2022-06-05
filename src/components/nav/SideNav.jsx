@@ -3,7 +3,7 @@ import Logo from "../../assets/images/logo.png";
 import { VscClose } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 
-const SideNav = ({ menu, handleSideNav, openedSideNav }) => {
+const SideNav = ({ menu, handleSideNav }) => {
   const navList = menu.map((item, index) => <NavLink key={index} {...item} />);
   return (
     <div className="fixed inset-0 bg-[rgba(255,255,255,0.95)] z-[11]">

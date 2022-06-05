@@ -16,7 +16,7 @@ const Banner = ({ bannerList }) => {
         <SwiperSlide key={index}>
           <Link
             to={`${type}/${id}`}
-            className="block pt-[125%] bg-center bg-no-repeat bg-cover"
+            className="block pt-[125%] md:pt-[50%] bg-center bg-no-repeat bg-cover"
             style={{
               backgroundImage: `url(${isMobile ? mobileBanner : pcBanner})`,
             }}

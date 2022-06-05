@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         40: "repeat(auto-fit, minmax(40%, 1fr))",
+        23: "repeat(auto-fit, minmax(23%, 1fr));",
       },
       keyframes: {
         growUp: {

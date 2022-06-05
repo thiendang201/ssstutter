@@ -7,7 +7,7 @@ const Products = ({ products = [] }) => {
     </li>
   ));
   return (
-    <ul className=" max-h-[69vh] grid grid-cols-40 mt-[2rem] pb-[1rem] gap-[2rem] overflow-auto">
+    <ul className=" max-h-[69vh] grid grid-cols-40 md:grid-cols-23 mt-[2rem] pb-[1rem] gap-[2rem] overflow-auto">
       {productList}
     </ul>
   );

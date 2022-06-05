@@ -17,7 +17,7 @@ const Layout = () => {
       setMenu(menu_data);
     }
 
-    openedSideNav && fetchData();
+    fetchData();
   }, [openedSideNav]);
 
   const handleSideNav = () => {
@@ -29,7 +29,11 @@ const Layout = () => {
 
   return (
     <>
-      <Header handleSideNav={handleSideNav} handleSearch={handleSearch} />
+      <Header
+        handleSideNav={handleSideNav}
+        handleSearch={handleSearch}
+        menu={menu}
+      />
       <CSSTransition
         in={openedSideNav}
         classNames="slide-up"

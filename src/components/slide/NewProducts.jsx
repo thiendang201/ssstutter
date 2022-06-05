@@ -4,9 +4,11 @@ import Button from "../../shared/Button";
 import Product from "../product/Product";
 
 const NewProducts = ({ products = [], categories = [], changeNewProducts }) => {
+  const windowWidth = window.innerWidth;
+  console.log((windowWidth / 390).toFixed() * 1 + 0.2);
   return (
-    <section className="py-[2.5rem] bg-[#103832]">
-      <h1 className="text-center text-[2.8rem] text-[#ffffff] font-semibold">
+    <section className="py-[2.5rem] bg-[#aabec6]  md:px-[2rem] md:py-[2.5rem] ">
+      <h1 className="text-center text-[2.8rem] text-[#ffffff] font-semibold md:text-[4.6rem]">
         WHAT'S NEW
       </h1>
       <div className="py-[2rem] text-white flex gap-[1rem] justify-center">
@@ -25,13 +27,13 @@ const NewProducts = ({ products = [], categories = [], changeNewProducts }) => {
         autoplay={{
           delay: 3500,
         }}
-        slidesPerView={1.15}
-        spaceBetween={10}
+        slidesPerView={(windowWidth / 420).toFixed() * 1 + 0.15}
+        spaceBetween={(windowWidth / 420).toFixed() * 10}
         modules={[Autoplay]}
       >
         {products.map((product) => (
           <SwiperSlide key={product.id} className="text-white">
-            <Product {...product} />
+            <Product {...product} textcolor="#f1f1f1" />
           </SwiperSlide>
         ))}
       </Swiper>

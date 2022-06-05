@@ -38,7 +38,7 @@ function Search({ handleSearch }) {
           type="text"
           autoFocus
           placeholder="Tìm kiếm ..."
-          className="p-[1rem] text-[1.3rem] border-2 border-[#aeaeae] rounded-md w-[80%] mt-[2rem] font-semibold outline-none"
+          className="p-[1rem] text-[1.3rem] border-2 border-[#aeaeae] rounded-md w-[80%] md:w-[50%] mt-[2rem] font-semibold outline-none"
           onChange={onChange}
         />
         <h2 className="text-[2rem] mt-[2rem] font-semibold">GỢI Ý CHO BẠN</h2>

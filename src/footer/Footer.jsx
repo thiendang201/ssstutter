@@ -5,8 +5,8 @@ import { FaTiktok } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="pt-[6rem] pb-[4rem] px-[2rem] bg-[#f7f7f7]">
-      <div className="grid gap-[2.4rem]">
-        <div>
+      <div className="flex flex-col lg:flex-row gap-[2.4rem]">
+        <div className="flex-1">
           <h4 className="uppercase font-semibold text-[1.6rem] mb-[1.2rem]">
             ssstutter
           </h4>
@@ -15,7 +15,7 @@ const Footer = () => {
             hàng một lối sống tinh gọn bằng các sản phẩm thời trang tinh tế.
           </p>
         </div>
-        <div>
+        <div className="flex-1">
           <h4 className="uppercase font-semibold text-[1.6rem] mb-[1.2rem]">
             Chi nhánh Hà Nội
           </h4>
@@ -34,7 +34,7 @@ const Footer = () => {
             <p>152 Nguyễn Gia Trí, Bình Thạnh</p>
           </div>
         </div>
-        <div>
+        <div className="flex-1">
           <h4 className="uppercase font-semibold text-[1.6rem] mb-[1.2rem]">
             Liên hệ
           </h4>
@@ -43,7 +43,7 @@ const Footer = () => {
             <p>Email: info@ssstutter.com</p>
           </div>
         </div>
-        <div>
+        <div className="flex-1">
           <h4 className="uppercase font-semibold text-[1.6rem] mb-[1.2rem]">
             Social
           </h4>

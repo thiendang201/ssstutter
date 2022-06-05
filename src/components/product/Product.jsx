@@ -2,7 +2,16 @@ import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { capitalize } from "../../utils/capitalizeString";
 
-const Product = ({ id, name, color, img_url, price, discount, salePrice }) => {
+const Product = ({
+  id,
+  name,
+  color,
+  img_url,
+  price,
+  discount,
+  salePrice,
+  textcolor = "#aeaeae",
+}) => {
   return (
     <div className="relative">
       <div>
@@ -32,7 +41,10 @@ const Product = ({ id, name, color, img_url, price, discount, salePrice }) => {
             <span className="text-[1.6rem]">₫</span>
           </p>
           {salePrice !== 0 && (
-            <p className="line-through text-[#aeaeae] mt-[-0.4rem]">
+            <p
+              style={{ color: textcolor }}
+              className="line-through mt-[-0.4rem]"
+            >
               <NumberFormat
                 thousandsGroupStyle="thousand"
                 value={price}
@@ -45,7 +57,7 @@ const Product = ({ id, name, color, img_url, price, discount, salePrice }) => {
           )}
         </div>
 
-        <div className="text-[1.2rem] text-[#aeaeae]">
+        <div style={{ color: textcolor }} className="text-[1.2rem]">
           <p>+{color} màu</p>
         </div>
       </div>
