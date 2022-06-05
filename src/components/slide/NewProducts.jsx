@@ -27,8 +27,8 @@ const NewProducts = ({ products = [], categories = [], changeNewProducts }) => {
         autoplay={{
           delay: 3500,
         }}
-        slidesPerView={(windowWidth / 420).toFixed() * 1 + 0.15}
-        spaceBetween={(windowWidth / 420).toFixed() * 10}
+        slidesPerView={(windowWidth / 420).toFixed() * 1 + 0.2}
+        spaceBetween={windowWidth < 768 ? 10 : 20}
         modules={[Autoplay]}
       >
         {products.map((product) => (

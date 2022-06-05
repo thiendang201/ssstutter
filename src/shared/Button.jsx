@@ -11,7 +11,7 @@ const Button = ({
     return (
       <button
         onClick={onclick}
-        className={`p-[1rem] relative font-semibold text-[1.6rem] md:text-[1.8rem] btn-underline ${active} ${beforeColor}`}
+        className={`p-[1rem] relative font-semibold text-[1.6rem] md:text-[1.8rem] btn-underline ${active} ${beforeColor} hover:active`}
       >
         {capitalize(text)}
       </button>

@@ -13,12 +13,12 @@ const Product = ({
   textcolor = "#aeaeae",
 }) => {
   return (
-    <div className="relative">
+    <div className="relative group ">
       <div>
         <Link
           to={`product/${id}`}
           style={{ backgroundImage: `url(${img_url})` }}
-          className=" block pt-[125%] bg-center bg-no-repeat bg-cover"
+          className=" block pt-[125%] bg-center bg-no-repeat bg-cover group-hover:brightness-90 transition-all duration-300"
         ></Link>
       </div>
       {discount !== 0 && (
@@ -28,7 +28,7 @@ const Product = ({
       )}
       <div className="text-left font-semibold mt-[0.4rem] ml-[0.6rem]">
         <h6 className="text-[1.4rem] capitalize">{capitalize(name)}</h6>
-        <div className="text-[1.8rem] ">
+        <div className="text-[1.8rem] md:flex gap-[0.4rem] items-center">
           <p>
             <NumberFormat
               thousandsGroupStyle="thousand"
@@ -43,7 +43,7 @@ const Product = ({
           {salePrice !== 0 && (
             <p
               style={{ color: textcolor }}
-              className="line-through mt-[-0.4rem]"
+              className="line-through mt-[-0.4rem] md:mt-0"
             >
               <NumberFormat
                 thousandsGroupStyle="thousand"

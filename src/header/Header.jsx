@@ -9,7 +9,7 @@ import NavLink from "../components/nav/NavLink";
 const Header = ({ handleSideNav, handleSearch, menu }) => {
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#ececec] z-10 h-[5.8rem]">
-      <nav className="grid px-[0.6rem] md:px-[1.6rem] grid-cols-[25%_1fr_25%] md:grid-cols-[15%_1fr_15%] gap-x-[5%] bg-white items-center h-[100%]">
+      <nav className="grid px-[0.6rem] md:px-[1.6rem] lg:px-[6.4rem] grid-cols-[25%_1fr_25%] md:grid-cols-[15%_1fr_15%] gap-x-[5%] bg-white items-center h-[100%]">
         <div className="md:hidden">
           <button className="p-3.5" onClick={handleSideNav}>
             <HiOutlineMenuAlt2 size={"2.4rem"} />
