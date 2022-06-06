@@ -5,7 +5,7 @@ const CateNav = ({ id, img, type }) => {
     <Link
       to={`${type}/${id}`}
       style={{ backgroundImage: `url(${img})` }}
-      className=" block pt-[50%] bg-center bg-no-repeat bg-cover"
+      className=" block pt-[50%] bg-center bg-no-repeat bg-cover hover:brightness-90 transition-all duration-300"
     />
   );
 };

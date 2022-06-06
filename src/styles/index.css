@@ -23,7 +23,8 @@
 }
 
 @layer components {
-  .btn-underline::before {
+  .btn-underline::before,
+  .menu-underline::before {
     @apply absolute bottom-[0.2rem] w-0 h-[0.3rem] left-0 content-[""] block transition-all duration-300 origin-left;
   }
 
@@ -31,12 +32,17 @@
     @apply absolute top-0 right-0 content-[""] opacity-0 block rounded-full bg-[#c1272d] w-[0.5rem] h-[0.5rem] transition-all duration-300;
   }
 
-  .btn-underline.active::before {
+  .btn-underline.active::before,
+  .menu-underline.active::before {
     @apply w-[100%] rounded-full;
   }
 
   .btn-underline.active::after {
     @apply opacity-100;
+  }
+
+  .nt5:nth-child(5n + 1) {
+    @apply col-span-full;
   }
 }
 
@@ -54,6 +60,27 @@
 }
 
 .blur-exit-active {
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.dialog-up-enter {
+  top: 110%;
+  opacity: 0;
+}
+.dialog-up-enter-active {
+  top: 100%;
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.dialog-up-exit {
+  top: 100%;
+  opacity: 1;
+}
+
+.dialog-up-exit-active {
+  top: 110%;
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
 }

@@ -20,11 +20,11 @@ const NavLink = ({ id, name, type = "category", children = [] }) => {
   ));
 
   return (
-    <li className="border-[#ececec] border-b-[1px] md:border-b-0 overflow-hidden md:flex md:items-center md:px-[2rem]">
+    <li className="border-[#ececec] border-b-[1px] md:border-b-0 overflow-hidden md:overflow-visible md:flex md:items-center">
       <Link
         to={`${type}/${id}`}
         onClick={window.innerWidth < 768 ? handleClick : undefined}
-        className="block w-[100%] p-[2rem] md:p-0 text-[1.4rem] uppercase font-[600] tracking-[0.13rem] md:text-center"
+        className="block w-[100%] p-[2rem] md:py-[1rem] text-[1.4rem] uppercase font-[600] tracking-[0.13rem] md:text-center md:px-[2rem] relative before:bg-black before:absolute before:top-[100%] before:w-0 before:h-[0.3rem] before:left-0 before:content-[''] before:block before:transition-all before:duration-300 before:origin-left hover:before:w-[100%] hover:before:rounded-full"
       >
         {name}
       </Link>

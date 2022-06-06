@@ -5,7 +5,6 @@ import Product from "../product/Product";
 
 const NewProducts = ({ products = [], categories = [], changeNewProducts }) => {
   const windowWidth = window.innerWidth;
-  console.log((windowWidth / 390).toFixed() * 1 + 0.2);
   return (
     <section className="py-[2.5rem] bg-[#aabec6]  md:px-[2rem] md:py-[2.5rem] ">
       <h1 className="text-center text-[2.8rem] text-[#ffffff] font-semibold md:text-[4.6rem]">

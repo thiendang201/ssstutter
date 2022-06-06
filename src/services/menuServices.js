@@ -11,4 +11,14 @@ function getCategory() {
   return getData(url);
 }
 
-export { getMenu, getCategory };
+function getCategoryInfo(cateId) {
+  const url = BASE_URL + `category/detail?cateId=${cateId}`;
+  return getData(url);
+}
+
+function getChildrenCategories(parentsId) {
+  const url = BASE_URL + `category/children?parentsId=${parentsId}`;
+  return getData(url);
+}
+
+export { getMenu, getCategory, getChildrenCategories, getCategoryInfo };
