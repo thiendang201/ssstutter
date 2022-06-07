@@ -28,7 +28,7 @@ const Product = ({
       )}
       <div className="text-left font-semibold mt-[0.4rem] ml-[0.6rem]">
         <h6 className="text-[1.4rem] capitalize">{capitalize(name)}</h6>
-        <div className="text-[1.8rem] md:flex gap-[0.4rem] items-center">
+        <div className="text-[1.8rem] md:flex gap-[0.4rem] items-center tracking-wide">
           <p>
             <NumberFormat
               thousandsGroupStyle="thousand"
@@ -38,12 +38,12 @@ const Product = ({
               thousandSeparator={true}
             />
 
-            <span className="text-[1.6rem]">₫</span>
+            <span className="text-[1.8rem]">₫</span>
           </p>
           {salePrice !== 0 && (
             <p
               style={{ color: textcolor }}
-              className="line-through mt-[-0.4rem] md:mt-0"
+              className="line-through mt-[-0.4rem] md:mt-0 text-[1.4rem]"
             >
               <NumberFormat
                 thousandsGroupStyle="thousand"
@@ -52,7 +52,7 @@ const Product = ({
                 decimalSeparator="."
                 thousandSeparator={true}
               />{" "}
-              <span className="text-[1.6rem]">₫</span>
+              <span className="text-[1.8rem]">₫</span>
             </p>
           )}
         </div>

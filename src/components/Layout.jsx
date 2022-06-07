@@ -40,11 +40,7 @@ const Layout = () => {
         timeout={300}
         unmountOnExit
       >
-        <SideNav
-          menu={menu}
-          handleSideNav={handleSideNav}
-          openedSideNav={openedSideNav}
-        />
+        <SideNav menu={menu} handleSideNav={handleSideNav} />
       </CSSTransition>
 
       <CSSTransition

@@ -15,10 +15,12 @@ import {
 import { capitalize } from "../utils/capitalizeString";
 import { CSSTransition } from "react-transition-group";
 import Product from "../components/product/Product";
+import Loading from "../components/product/Loading";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const ProductsPage = () => {
-  const { cateId } = useParams();
-  const [category, setCategory] = useState({ id: cateId, name: "", text: "" });
+  const { cateId, parentId } = useParams();
+  const [category, setCategory] = useState({ id: cateId, name: "" });
   const [childrenCategories, setChildrenCategories] = useState([]);
   const [productList, setProductList] = useState([]);
   const [colors, setColors] = useState([]);
@@ -34,24 +36,29 @@ const ProductsPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const children = await getChildrenCategories(cateId);
+      const cateInfo = await getCategoryInfo(cateId);
+      const children = await getChildrenCategories(parentId || cateId);
       const sizes = await getSizes();
       const colors = await getColors();
 
+      setCategory(cateInfo);
       setChildrenCategories(children);
       setSizes(sizes);
       setColors(colors);
     }
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cateId, parentId]);
 
   useEffect(() => {
     async function fetchData() {
-      const { total, ...cateInfo } = await getCategoryInfo(category.id);
-
-      setCategory(cateInfo);
+      const { total, products } = await filterProducts(
+        0,
+        6,
+        category.id,
+        "desc"
+      );
+      setProductList(products);
       setTotal(total);
     }
 
@@ -60,25 +67,71 @@ const ProductsPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const products = await filterProducts(start, 9, category.id, sort);
-      setProductList(products);
+      const { total, products } = await filterProducts(
+        start,
+        6,
+        category.id,
+        sort
+      );
+      setProductList((prev) => {
+        const existsList = prev.map(({ id }) => id);
+        const newProducts = products.filter(
+          ({ id }) => !existsList.includes(id)
+        );
+        const list = [...prev, ...newProducts];
+        return list;
+      });
+      setTotal(total);
     }
 
     fetchData();
-  }, [category.id, sort, start]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sort, start]);
 
-  const changeCategory = (id) => (e) => {
+  const fetchMoreData = () => {
+    const hasMore = productList.length < total;
+    hasMore && setFilter({ ...filter, start: productList.length });
+  };
+
+  const changeCategory = (category) => (e) => {
     e.preventDefault();
-    setCategory({ ...category, id: id });
+    setCategory(category);
+    handleCategory();
+    setFilter({ ...filter, start: 0 });
+    window.scrollTo(0, 0);
   };
 
   const handleCategory = () => {
     setOpenCateList(!openCateList);
   };
 
+  const loading = (
+    <ul className="grid grid-cols-2 gap-[1rem] py-[4.4rem]">
+      <li className="nt5">
+        <Loading />
+      </li>
+      <li className="nt5">
+        <Loading />
+      </li>
+      <li className="nt5">
+        <Loading />
+      </li>
+      <li className="nt5">
+        <Loading />
+      </li>
+      <li className="nt5">
+        <Loading />
+      </li>
+    </ul>
+  );
+
+  console.log(total);
+  console.log(filter);
+  console.log(productList);
+
   return (
     <div>
-      <div className="flex justify-between px-[2rem] py-[0.5rem] fixed top-[5.8rem] left-0 right-0 z-10 bg-white">
+      <div className="flex justify-between px-[2rem] py-[1rem] fixed top-[5.8rem] left-0 right-0 z-10 bg-white">
         <div className="relative">
           <button
             onClick={handleCategory}
@@ -94,17 +147,17 @@ const ProductsPage = () => {
             unmountOnExit
           >
             <ul className="shadow-lg bg-white rounded-[0.4rem] absolute top-[100%] p-[2rem] pt-[1rem] left-0 min-w-max max-w-[80vh] max-h-[70vh] z-10">
-              {childrenCategories.map(({ id, name }) => (
+              {childrenCategories.map((category) => (
                 <li
-                  key={id}
+                  key={category.id}
                   className="border-b last:border-b-0 border-[#ececec]"
                 >
                   <Link
                     to="#"
-                    onClick={changeCategory(id)}
+                    onClick={changeCategory(category)}
                     className="font-semibold text-[1.4rem] p-[1rem] block"
                   >
-                    {name}
+                    {category.name}
                   </Link>
                 </li>
               ))}
@@ -117,13 +170,31 @@ const ProductsPage = () => {
           </button>
         </div>
       </div>
-      <ul className="grid grid-cols-2 gap-[1rem]">
-        {productList.map((product) => (
-          <li key={product.id} className="nt5">
-            <Product {...product} />
-          </li>
-        ))}
-      </ul>
+      {!productList.length && total > 0 && loading}
+      {total === 0 && (
+        <h3 className="pt-[10rem] pb-[4.4rem] text-center text-[1.6rem] font-semibold">
+          Không có sản phẩm nào!
+        </h3>
+      )}
+      {productList.length && (
+        <InfiniteScroll
+          dataLength={productList.length}
+          next={fetchMoreData}
+          hasMore={productList.length < total}
+          loader={loading}
+          scrollThreshold={0.7}
+        >
+          {
+            <ul className="grid grid-cols-2 gap-[1rem] py-[4.4rem]">
+              {productList.map((product) => (
+                <li key={product.id} className="nt5">
+                  <Product {...product} />
+                </li>
+              ))}
+            </ul>
+          }
+        </InfiniteScroll>
+      )}
     </div>
   );
 };

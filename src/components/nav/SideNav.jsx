@@ -4,7 +4,9 @@ import { VscClose } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 
 const SideNav = ({ menu, handleSideNav }) => {
-  const navList = menu.map((item, index) => <NavLink key={index} {...item} />);
+  const navList = menu.map((item, index) => (
+    <NavLink handleSideNav={handleSideNav} key={index} {...item} />
+  ));
   return (
     <div className="fixed inset-0 bg-[rgba(255,255,255,0.95)] z-[11]">
       <div className="bg-white flex justify-between py-[1.4rem] pl-[2rem] pr-[1.2rem] items-center border-b-[0.1rem] border-[#ececec]">

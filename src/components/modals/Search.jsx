@@ -45,7 +45,10 @@ function Search({ handleSearch }) {
 
         {!searchStr && productList.length === 0 && (
           <div className="grid grid-cols-40 md:grid-cols-3 lg:grid-cols-4 p-[2rem] gap-[2rem]">
-            <Loading number={4} />
+            <Loading />
+            <Loading />
+            <Loading />
+            <Loading />
           </div>
         )}
 
