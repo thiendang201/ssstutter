@@ -41,7 +41,7 @@ const ProductsPage = () => {
     sizes: [],
     sort: "desc",
     price: [0, -1],
-    limit: 5,
+    limit: window.innerWidth < 768 ? 5 : 6,
     touched: {
       color: false,
       size: false,
@@ -71,7 +71,7 @@ const ProductsPage = () => {
         sort: "desc",
         price: [0, -1],
         cateId: category.id,
-        limit: 5,
+        limit: window.innerWidth < 768 ? 5 : 6,
       });
       setProductList(products);
       setTotal(total);
@@ -135,7 +135,7 @@ const ProductsPage = () => {
       sizes: [],
       sort: "desc",
       price: [0, -1],
-      limit: 5,
+      limit: window.innerWidth < 768 ? 5 : 6,
       touched: {
         color: false,
         size: false,
@@ -198,7 +198,7 @@ const ProductsPage = () => {
   };
 
   const loading = (
-    <ul className="grid grid-cols-2 gap-[1rem] py-[4.4rem]">
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-[1rem] py-[4.4rem]">
       <li className="nt5">
         <Loading />
       </li>
@@ -212,6 +212,9 @@ const ProductsPage = () => {
         <Loading />
       </li>
       <li className="nt5">
+        <Loading />
+      </li>
+      <li className="nt5 hidden md:block">
         <Loading />
       </li>
     </ul>
@@ -269,7 +272,7 @@ const ProductsPage = () => {
             classNames="slide-up"
             unmountOnExit
           >
-            <div className="fixed inset-0 z-[1] bg-white mt-[5.8rem] flex flex-col justify-between">
+            <div className="fixed inset-0 md:right-[50%] z-[2] bg-white mt-[5.8rem] flex flex-col justify-between">
               <ul className="text-[1.8rem] font-semibold px-[2rem] pt-[1rem] overflow-y-auto h-[86vh] ">
                 <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white">
                   <button
@@ -475,7 +478,7 @@ const ProductsPage = () => {
           scrollThreshold={0.7}
         >
           {
-            <ul className="grid grid-cols-2 gap-[1rem] py-[4.4rem]">
+            <ul className="grid grid-cols-2 md:grid-cols-3 gap-[1rem] py-[4.4rem]">
               {productList.map((product) => (
                 <li key={product.id} className="nt5">
                   <Product {...product} />

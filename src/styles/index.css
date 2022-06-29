@@ -42,7 +42,7 @@
   }
 
   .nt5:nth-child(5n + 1) {
-    @apply col-span-full;
+    @apply col-span-full md:col-auto;
   }
 }
 
