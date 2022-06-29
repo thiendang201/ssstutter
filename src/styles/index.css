@@ -8,6 +8,7 @@
     -webkit-tap-highlight-color: transparent;
     font-size: 62.5%;
     color: #191919;
+    scroll-behavior: smooth;
   }
 
   body {

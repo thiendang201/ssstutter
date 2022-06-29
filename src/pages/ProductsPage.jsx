@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import { useParams } from "react-router-dom";
-import Slider from "rc-slider";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "rc-slider/assets/index.css";
 import { CSSTransition } from "react-transition-group";
@@ -22,11 +21,11 @@ import { capitalize } from "../utils/capitalizeString";
 import Product from "../components/product/Product";
 import Loading from "../components/product/Loading";
 import Button from "../shared/Button";
-import NumberFormat from "react-number-format";
+import Filter from "../components/filter/Filter";
 
 const ProductsPage = () => {
   const { cateId, parentId } = useParams();
-  const [category, setCategory] = useState({ id: cateId, name: "" });
+  const [category, setCategory] = useState({ id: cateId, name: "", text: "" });
   const [childrenCategories, setChildrenCategories] = useState([]);
   const [productList, setProductList] = useState([]);
   const [colors, setColors] = useState([]);
@@ -41,7 +40,7 @@ const ProductsPage = () => {
     sizes: [],
     sort: "desc",
     price: [0, -1],
-    limit: window.innerWidth < 768 ? 5 : 6,
+    limit: window.innerWidth < 768 ? 5 : 9,
     touched: {
       color: false,
       size: false,
@@ -71,7 +70,7 @@ const ProductsPage = () => {
         sort: "desc",
         price: [0, -1],
         cateId: category.id,
-        limit: window.innerWidth < 768 ? 5 : 6,
+        limit: window.innerWidth < 768 ? 5 : 9,
       });
       setProductList(products);
       setTotal(total);
@@ -114,7 +113,7 @@ const ProductsPage = () => {
     e.preventDefault();
     handleCategory();
     setCategory(category);
-    setFilter({ ...filter, start: 0 });
+    unFilter();
     window.scrollTo(0, 0);
   };
 
@@ -123,9 +122,6 @@ const ProductsPage = () => {
   };
   const handleFilter = () => {
     setOpenFilter(!openFilter);
-    if (openFilter) {
-      window.scrollTo(0, 0);
-    }
   };
 
   const unFilter = () => {
@@ -135,7 +131,7 @@ const ProductsPage = () => {
       sizes: [],
       sort: "desc",
       price: [0, -1],
-      limit: window.innerWidth < 768 ? 5 : 6,
+      limit: window.innerWidth < 768 ? 5 : 9,
       touched: {
         color: false,
         size: false,
@@ -143,7 +139,7 @@ const ProductsPage = () => {
         sort: false,
       },
     });
-    handleFilter();
+    setOpenFilter(false);
   };
 
   const onFilter = (name, type) => (data) => {
@@ -208,15 +204,6 @@ const ProductsPage = () => {
       <li className="nt5">
         <Loading />
       </li>
-      <li className="nt5">
-        <Loading />
-      </li>
-      <li className="nt5">
-        <Loading />
-      </li>
-      <li className="nt5 hidden md:block">
-        <Loading />
-      </li>
     </ul>
   );
 
@@ -225,8 +212,34 @@ const ProductsPage = () => {
   );
 
   return (
-    <div>
-      <div className="flex justify-between px-[2rem] py-[1rem] fixed top-[5.8rem] left-0 right-0 z-10 bg-white ">
+    <div className="lg:px-[6.4rem]">
+      <div className="hidden lg:block">
+        <div>
+          <h1 className="uppercase font-semibold text-[2.8rem] pt-[6rem]">
+            {category.text || category.name}
+          </h1>
+          <p className="mr-[46%] font-semibold text-[1.4rem] opacity-50 mt-[1rem]">
+            Tất cả những sản phẩm Mới nhất nằm trong BST được mở bán Hàng Tuần
+            sẽ được cập nhật liên tục tại đây. Chắc chắn bạn sẽ tìm thấy những
+            sản phẩm Đẹp Nhất - Vừa Vặn Nhất - Phù Hợp nhất với phong cách của
+            mình.
+          </p>
+        </div>
+        <ul className="pt-[6rem] grid grid-cols-5 gap-[1rem]">
+          {childrenCategories.map((category) => (
+            <li key={category.id}>
+              <Link
+                to="#"
+                onClick={changeCategory(category)}
+                className="font-semibold text-[1.4rem] py-[1rem] hover:opacity-75 transition-all duration-300"
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="lg:hidden flex justify-between px-[2rem] py-[1rem] fixed top-[5.8rem] left-0 right-0 z-10 bg-white ">
         <div className="relative">
           <button
             onClick={handleCategory}
@@ -273,179 +286,14 @@ const ProductsPage = () => {
             unmountOnExit
           >
             <div className="fixed inset-0 md:right-[50%] z-[2] bg-white mt-[5.8rem] flex flex-col justify-between">
-              <ul className="text-[1.8rem] font-semibold px-[2rem] pt-[1rem] overflow-y-auto h-[86vh] ">
-                <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white">
-                  <button
-                    onClick={onFilterClick}
-                    className="flex w-[100%] justify-between"
-                  >
-                    Mức giá <RiArrowDropDownLine size={24} />
-                  </button>
-                  <p className="pt-[1rem] font-medium text-[1.8rem]">
-                    {filter.price[0] < filter.price[1] ||
-                    filter.price[1] === -1 ? (
-                      <>
-                        Từ{" "}
-                        <NumberFormat
-                          thousandsGroupStyle="thousand"
-                          value={filter.price[0]}
-                          decimalSeparator="."
-                          displayType="text"
-                          thousandSeparator={true}
-                        />
-                        <span className="text-[2rem]">₫</span>
-                        {" đến "}
-                        <NumberFormat
-                          thousandsGroupStyle="thousand"
-                          value={
-                            filter.price[1] === -1
-                              ? maxPrice + 1000
-                              : filter.price[1]
-                          }
-                          decimalSeparator="."
-                          displayType="text"
-                          thousandSeparator={true}
-                        />
-                        <span className="text-[2rem]">₫</span>
-                      </>
-                    ) : (
-                      <>
-                        <NumberFormat
-                          thousandsGroupStyle="thousand"
-                          value={
-                            filter.price[1] === -1
-                              ? maxPrice + 1000
-                              : filter.price[1]
-                          }
-                          decimalSeparator="."
-                          displayType="text"
-                          thousandSeparator={true}
-                        />
-                        <span className="text-[2rem]">₫</span>
-                      </>
-                    )}
-                  </p>
-                  <div className="px-[1rem] pb-[3rem]">
-                    {maxPrice && (
-                      <Slider
-                        trackStyle={{
-                          backgroundColor: "#000",
-                        }}
-                        handleStyle={{
-                          borderColor: "#000",
-                        }}
-                        activeDotStyle={{
-                          borderColor: "#000",
-                        }}
-                        range
-                        step={10}
-                        min={0}
-                        max={((maxPrice + 1000) / 1000) | 0}
-                        defaultValue={[0, ((maxPrice + 1000) / 1000) | 0]}
-                        marks={{
-                          0: 0,
-                          [((maxPrice + 1000) / 1000) | 0]:
-                            ((maxPrice + 1000) / 1000) | 0,
-                        }}
-                        onChange={onFilter("price", "range")}
-                      />
-                    )}
-                  </div>
-                </li>
-                <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white">
-                  <button
-                    onClick={onFilterClick}
-                    className="flex w-[100%] justify-between"
-                  >
-                    Màu sắc <RiArrowDropDownLine size={24} />
-                  </button>
-                  <div className="relative">
-                    <div className="mt-[1rem] pb-[2rem] text-[1.4rem] font-[500] grid grid-cols-2 gap-[1.4rem] relative max-h-[52vh] overflow-y-auto">
-                      {colors.map(({ id, name }) => (
-                        <div key={id}>
-                          <input
-                            id={`color${id}`}
-                            type="checkbox"
-                            className="appearance-none peer absolute"
-                            value={id}
-                            name="colors"
-                            checked={filter?.colors.includes(id)}
-                            onChange={onFilter("colors", "checkbox")}
-                          />
-                          <label
-                            htmlFor={`color${id}`}
-                            className="peer-checked:bg-stone-100 transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
-                          >
-                            {name}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 h-[4rem] bg-gradient-to-t from-white"></div>
-                  </div>
-                </li>
-                <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white">
-                  <button
-                    onClick={onFilterClick}
-                    className="flex w-[100%] justify-between"
-                  >
-                    Kích cỡ <RiArrowDropDownLine size={24} />
-                  </button>
-                  <div className="py-[2rem] text-[1.6rem] font-[500] grid grid-cols-5 gap-[1.4rem] overflow-y-auto max-h-[60vh]">
-                    {sizes.map(({ size }) => (
-                      <div key={size} className="relative">
-                        <input
-                          id={`size${size}`}
-                          type="checkbox"
-                          className="appearance-none peer absolute"
-                          value={size}
-                          checked={filter?.sizes.includes(size)}
-                          name="sizes"
-                          onChange={onFilter("sizes", "checkbox")}
-                        />
-                        <label
-                          htmlFor={`size${size}`}
-                          className="peer-checked:bg-stone-100 transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
-                        >
-                          {size}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </li>
-                <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white">
-                  <button
-                    onClick={onFilterClick}
-                    className="flex w-[100%] justify-between"
-                  >
-                    Sắp xếp <RiArrowDropDownLine size={24} />
-                  </button>
-                  <div className="py-[2rem] text-[1.6rem] font-[500] grid grid-cols-2 gap-[1.4rem] overflow-y-auto max-h-[60vh]">
-                    {[
-                      { text: "Giá giảm dần", value: "desc" },
-                      { text: "Giá tăng dần", value: "asc" },
-                    ].map(({ text, value }, index) => (
-                      <div key={index} className="relative">
-                        <input
-                          id={`sort${value}`}
-                          type="radio"
-                          className="appearance-none peer absolute"
-                          value={value}
-                          name="sort"
-                          onChange={onFilter("sort", "radio")}
-                          checked={filter?.sort === value}
-                        />
-                        <label
-                          htmlFor={`sort${value}`}
-                          className="peer-checked:bg-stone-100 transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
-                        >
-                          {text}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </li>
-              </ul>
+              <Filter
+                filter={filter}
+                colors={colors}
+                sizes={sizes}
+                onFilter={onFilter}
+                onFilterClick={onFilterClick}
+                maxPrice={maxPrice}
+              />
               <div className="p-[2rem] flex justify-between gap-[1.4rem]">
                 <Button
                   onclick={FilterTouched ? unFilter : handleFilter}
@@ -463,31 +311,45 @@ const ProductsPage = () => {
           </CSSTransition>
         </div>
       </div>
-      {total < 0 && loading}
-      {total === 0 && (
-        <h3 className="pt-[10rem] pb-[4.4rem] text-center text-[1.6rem] font-semibold">
-          Không có sản phẩm nào!
-        </h3>
-      )}
-      {total > 0 && (
-        <InfiniteScroll
-          dataLength={productList.length}
-          next={fetchMoreData}
-          hasMore={productList.length < total}
-          loader={loading}
-          scrollThreshold={0.7}
-        >
-          {
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-[1rem] py-[4.4rem]">
-              {productList.map((product) => (
-                <li key={product.id} className="nt5">
-                  <Product {...product} />
-                </li>
-              ))}
-            </ul>
-          }
-        </InfiniteScroll>
-      )}
+      <div className="lg:grid grid-cols-4 gap-[1rem]">
+        <div className="hidden lg:block col-[1/2] pt-[2.4rem] pr-[1rem]">
+          <Filter
+            filter={filter}
+            colors={colors}
+            sizes={sizes}
+            onFilter={onFilter}
+            onFilterClick={onFilterClick}
+            maxPrice={maxPrice}
+          />
+        </div>
+        <div className="col-[2/-1]">
+          {total < 0 && loading}
+          {total === 0 && (
+            <h3 className="pt-[10rem] pb-[4.4rem] text-center text-[1.6rem] font-semibold">
+              Không có sản phẩm nào!
+            </h3>
+          )}
+          {total > 0 && (
+            <InfiniteScroll
+              dataLength={productList.length}
+              next={fetchMoreData}
+              hasMore={productList.length < total}
+              loader={loading}
+              scrollThreshold={0.7}
+            >
+              {
+                <ul className="grid grid-cols-2 md:grid-cols-3 gap-[1rem] py-[4.4rem]">
+                  {productList.map((product) => (
+                    <li key={product.id} className="nt5">
+                      <Product {...product} />
+                    </li>
+                  ))}
+                </ul>
+              }
+            </InfiniteScroll>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
