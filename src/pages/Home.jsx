@@ -66,7 +66,6 @@ const Home = () => {
       });
 
       e.target.classList.toggle("active");
-      console.log(idCate);
       section === "new" && setIdCateNewProducts(idCate);
       section === "weekly-best" && setIdCateWeeklyBest(idCate);
     };

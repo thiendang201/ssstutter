@@ -7,18 +7,21 @@ function search(searchStr = "", limit = 4) {
   return getData(url);
 }
 
-function filterProducts(start = 0, limit = 9, cateId = 0, sort = "desc") {
-  const url =
-    BASE_URL +
-    `products/filter?cateId=${cateId}&start=${start}&limit=${limit}&sort=${sort}`;
-  return getData(url);
+function filterProducts(filter) {
+  const url = BASE_URL + `products/filter`;
+  return getData(url, "post", filter);
 }
-function getSizes() {
+function getColors() {
   const url = BASE_URL + `colors`;
   return getData(url);
 }
-function getColors() {
+function getSizes() {
   const url = BASE_URL + `sizes`;
+  return getData(url);
+}
+
+function getMaxPrice() {
+  const url = BASE_URL + `max-price`;
   return getData(url);
 }
 
@@ -40,4 +43,5 @@ export {
   filterProducts,
   getSizes,
   getColors,
+  getMaxPrice,
 };

@@ -24,7 +24,7 @@ function Search({ handleSearch }) {
   };
 
   return (
-    <div className="mt-[5.8rem] fixed inset-0 lg:px-[6.4rem] bg-white z-[10]">
+    <div className="mt-[5.8rem] fixed inset-0 lg:px-[6.4rem] bg-white z-10">
       <div className="grid grid-cols-[25%_1fr_25%] gap-[10%] items-center border-b border-[#ececec] p-[0.6rem] px-[0.6rem]">
         <div>
           <button className="p-3.5" onClick={handleSearch}>
