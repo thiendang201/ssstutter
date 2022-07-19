@@ -16,7 +16,7 @@ const Product = ({
     <div className="relative group ">
       <div>
         <Link
-          to={`product/${id}`}
+          to={`../product/${id}`}
           style={{ backgroundImage: `url(${img_url})` }}
           className=" block pt-[125%] bg-center bg-no-repeat bg-cover group-hover:brightness-90 transition-all duration-300"
         ></Link>

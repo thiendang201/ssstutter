@@ -36,6 +36,11 @@ function getWeeklyBestProducts(limit = 4, cateId = 0) {
   return getData(url);
 }
 
+function getDetail(productId = 0) {
+  const url = BASE_URL + `product/detail?productId=${productId}`;
+  return getData(url);
+}
+
 export {
   search,
   getNewProducts,
@@ -44,4 +49,5 @@ export {
   getSizes,
   getColors,
   getMaxPrice,
+  getDetail,
 };

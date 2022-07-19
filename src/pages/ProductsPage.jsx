@@ -187,10 +187,7 @@ const ProductsPage = () => {
     parentNode.classList.toggle("max-h-[5.8rem]");
     if (parentNode.classList.contains("overflow-visible"))
       parentNode.classList.remove("overflow-visible");
-    else
-      setTimeout(() => {
-        parentNode.classList.add("overflow-visible");
-      }, 300);
+    else parentNode.classList.add("overflow-visible");
   };
 
   const loading = (
@@ -311,7 +308,7 @@ const ProductsPage = () => {
           </CSSTransition>
         </div>
       </div>
-      <div className="lg:grid grid-cols-4 gap-[1rem]">
+      <div className="lg:grid grid-cols-4 ">
         <div className="hidden lg:block col-[1/2] pt-[2.4rem] pr-[1rem]">
           <Filter
             filter={filter}

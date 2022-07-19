@@ -11,7 +11,7 @@ const Filter = ({
   sizes,
 }) => {
   return (
-    <ul className="lg:sticky lg:top-[7.8rem] lg:p-0 text-[1.8rem] lg:text-[1.4rem] px-[2rem] pt-[1rem] overflow-y-auto h-[86vh] ">
+    <ul className="lg:sticky lg:top-[7.8rem] lg:p-0 text-[1.8rem] lg:text-[1.4rem] px-[2rem] lg:pr-[1rem] pt-[1rem] overflow-y-auto h-[86vh] ">
       <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem] overflow-hidden transition-all duration-300 bg-white">
         <button
           onClick={onFilterClick}
@@ -19,7 +19,7 @@ const Filter = ({
         >
           Mức giá <RiArrowDropDownLine size={24} />
         </button>
-        <p className="pt-[1rem] font-medium text-[1.8rem]">
+        <p className="pt-[1rem] font-medium text-[1.4rem]">
           {filter.price[0] < filter.price[1] || filter.price[1] === -1 ? (
             <>
               Từ{" "}
@@ -93,7 +93,7 @@ const Filter = ({
           Màu sắc <RiArrowDropDownLine size={24} />
         </button>
         <div className="relative">
-          <div className="mt-[2rem] pb-[2rem] text-[1.4rem] font-[500] grid grid-cols-2 gap-[1.4rem] relative max-h-[52vh] overflow-y-auto">
+          <div className="mt-[2rem] pb-[2rem] text-[1.4rem] font-[500] grid grid-cols-2 gap-[1.4rem] relative max-h-[52vh] items-stretch overflow-y-auto">
             {colors.map(({ id, name }) => (
               <div key={id}>
                 <input
@@ -107,7 +107,7 @@ const Filter = ({
                 />
                 <label
                   htmlFor={`color${id}`}
-                  className="peer-checked:bg-stone-100 transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
+                  className="peer-checked:bg-stone-100 h-[100%] transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
                 >
                   {name}
                 </label>
