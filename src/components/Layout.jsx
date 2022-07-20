@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import Header from "../header/Header";
@@ -7,6 +7,7 @@ import Search from "../components/modals/Search";
 import { getMenu } from "../services/menuServices";
 import Footer from "../footer/Footer";
 
+const Context = React.createContext();
 const Layout = () => {
   const [openedSideNav, setOpenedSideNav] = useState(false);
   const [openedSearch, setOpenedSearch] = useState(false);
@@ -26,9 +27,12 @@ const Layout = () => {
   const handleSearch = () => {
     setOpenedSearch(!openedSearch);
   };
+  const closeSearch = () => {
+    setOpenedSearch(false);
+  };
 
   return (
-    <>
+    <Context.Provider value={{ closeSearch }}>
       <Header
         handleSideNav={handleSideNav}
         handleSearch={handleSearch}
@@ -55,8 +59,9 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
-    </>
+    </Context.Provider>
   );
 };
 
 export default Layout;
+export { Context };

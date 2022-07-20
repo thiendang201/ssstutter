@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
 import { capitalize } from "../../utils/capitalizeString";
+import { useContext } from "react";
+import { Context } from "../Layout";
 
 const Product = ({
   id,
@@ -12,12 +14,15 @@ const Product = ({
   salePrice,
   textcolor = "#aeaeae",
 }) => {
+  const { closeSearch } = useContext(Context);
+
   return (
     <div className="relative group ">
       <div>
         <Link
           to={`../product/${id}`}
           onClick={() => {
+            closeSearch();
             window.scrollTo(0, 0);
           }}
           style={{ backgroundImage: `url(${img_url})` }}

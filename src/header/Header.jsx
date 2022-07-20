@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import {
   HiOutlineMenuAlt2,
   HiOutlineShoppingBag,
   HiOutlineSearch,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { Context } from "../components/Layout";
 import NavLink from "../components/nav/NavLink";
 
 const Header = ({ handleSideNav, handleSearch, menu }) => {
+  const { closeSearch } = useContext(Context);
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#ececec] z-10 h-[5.8rem]">
       <nav className="grid px-[0.6rem] md:px-[1.6rem] lg:px-[6.4rem] grid-cols-[25%_1fr_25%] md:grid-cols-[15%_1fr_15%] gap-x-[5%] bg-white items-center h-[100%]">
@@ -20,6 +23,7 @@ const Header = ({ handleSideNav, handleSearch, menu }) => {
             to={"/"}
             onClick={() => {
               window.scrollTo(0, 0);
+              closeSearch();
             }}
             className="relative h-[100%] before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:h-[100%] before:w-[76%] before:bg-center before:bg-no-repeat before:bg-contain before:bg-[url('../assets/images/logo.png')] md:before:hidden flex items-center"
           >

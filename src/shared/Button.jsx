@@ -24,7 +24,7 @@ const Button = ({
       <button
         onClick={onclick}
         onAnimationEnd={onAnimationEnd}
-        className={`p-[1rem] relative font-semibold text-[1.6rem] md:text-[1.8rem] border border-black rounded-[0.4rem] ${className}`}
+        className={`p-[1rem] relative  font-semibold text-[1.6rem] md:text-[1.8rem] border border-black rounded-[0.4rem] ${className}`}
       >
         {text}
       </button>
@@ -44,7 +44,7 @@ const Button = ({
     <button
       onClick={onclick}
       onAnimationEnd={onAnimationEnd}
-      className={`p-[1rem] relative font-semibold text-white text-[1.6rem] md:text-[1.8rem] bg-black rounded-[0.4rem] ${className}`}
+      className={`p-[1rem] relative font-semibold text-white text-[1.6rem] md:text-[1.8rem] bg-black rounded-[0.4rem] transition-all duration-300 ${className}`}
     >
       {text}
     </button>

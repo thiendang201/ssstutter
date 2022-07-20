@@ -21,10 +21,15 @@ module.exports = {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(0.95)" },
         },
+        clickB: {
+          "0%, 100%": { transform: "scale(0.95)" },
+          "50%": { transform: "scale(0.9)" },
+        },
       },
       animation: {
         growUp: "growUp 0.4s ease-in-out",
         clickA: "clickA 0.3s ease-in-out",
+        clickB: "clickB 0.3s ease-in-out",
       },
     },
   },

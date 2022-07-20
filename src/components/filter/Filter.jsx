@@ -11,7 +11,7 @@ const Filter = ({
   sizes,
 }) => {
   return (
-    <ul className="lg:sticky lg:top-[7.8rem] lg:p-0 text-[1.8rem] lg:text-[1.4rem] px-[2rem] lg:pr-[1rem] pt-[1rem] overflow-y-auto h-[86vh] ">
+    <ul className="lg:sticky lg:top-[7.8rem] lg:p-0 text-[1.8rem] lg:text-[1.4rem] px-[2rem] lg:pr-[1rem] pt-[1rem] overflow-y-auto h-[86vh] scrollbar">
       <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem] overflow-hidden transition-all duration-300 bg-white">
         <button
           onClick={onFilterClick}
@@ -85,7 +85,7 @@ const Filter = ({
           )}
         </div>
       </li>
-      <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white">
+      <li className="pt-[2rem] pb-[1rem] border-b border-[#ececec] max-h-[5.8rem]  overflow-hidden transition-all duration-300 bg-white ">
         <button
           onClick={onFilterClick}
           className="flex w-[100%] justify-between font-semibold"
@@ -93,7 +93,7 @@ const Filter = ({
           Màu sắc <RiArrowDropDownLine size={24} />
         </button>
         <div className="relative">
-          <div className="mt-[2rem] pb-[2rem] text-[1.4rem] font-[500] grid grid-cols-2 gap-[1.4rem] relative max-h-[52vh] items-stretch overflow-y-auto">
+          <div className="mt-[2rem] pb-[2rem] text-[1.4rem] font-[500] grid grid-cols-2 gap-[1.4rem] relative max-h-[52vh] items-stretch overflow-y-auto scrollbar">
             {colors.map(({ id, name }) => (
               <div key={id}>
                 <input

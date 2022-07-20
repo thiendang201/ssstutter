@@ -80,7 +80,7 @@ const ProductDetails = () => {
   return (
     <div className="md:grid md:grid-cols-3 pb-[2rem]">
       <div className="md:col-span-2 md:col-end-3">
-        <ul className="w-[100%] flex overflow-x-auto snap-x snap-mandatory md:block md:snap-none md:overflow-x-visible ">
+        <ul className="w-[100%] flex overflow-x-auto snap-x snap-mandatory md:block md:snap-none md:overflow-x-visible lg:grid grid-cols-2">
           {variant?.images &&
             variant.images.map(({ id, url }) => (
               <li
@@ -138,7 +138,7 @@ const ProductDetails = () => {
                     />
                     <label
                       htmlFor={`variant${v.id}`}
-                      className={`shadow-lg block w-[100%] pt-[100%] bg-center bg-no-repeat bg-cover rounded-[0.4rem] transition-all duration-300 border-2 border-[#d3d3d3] lg:peer-hover:scale-[0.9]  peer-checked:border-[#000] peer-checked:animate-clickA ${
+                      className={`shadow-lg block w-[100%] pt-[100%] bg-center bg-no-repeat bg-cover rounded-[0.4rem] transition-all duration-300 border-2 border-[#d3d3d3] lg:peer-hover:scale-[0.95]  peer-checked:border-[#000] peer-checked:animate-clickA lg:peer-checked:animate-clickB ${
                         v.qty === 0 ? "disabled" : ""
                       }`}
                       style={{ backgroundImage: `url(${v.thumbnail})` }}
@@ -166,7 +166,7 @@ const ProductDetails = () => {
                       htmlFor={`size${size}`}
                       className={`block px-[2rem] py-[1rem] border-2 border-[#f1f1f1] text-[1.8rem] font-semibold text-center rounded-[0.4rem] transition-all duration-300 ${
                         quantity !== 0
-                          ? "lg:peer-hover:scale-[0.9] peer-checked:animate-clickA peer-checked:text-[#fff] peer-checked:border-[#000] peer-checked:bg-[#000]"
+                          ? "lg:peer-hover:scale-[0.95] peer-checked:animate-clickA   lg:peer-checked:animate-clickB peer-checked:text-[#fff] peer-checked:border-[#000] peer-checked:bg-[#000]"
                           : "disabled"
                       } `}
                     >
@@ -178,10 +178,10 @@ const ProductDetails = () => {
           </div>
           <div className="mt-[3rem]">
             <Button
-              type={variant.qty === 0 ? "disabled" : "outline"}
+              type={variant.qty === 0 ? "disabled" : ""}
               text={variant.qty === 0 ? "HẾT HÀNG" : "THÊM VÀO GIỎ HÀNG"}
-              className={`w-[100%] text-white bg-black ${
-                addEffect ? "animate-clickA" : ""
+              className={`w-[100%] lg:hover:scale-[0.95] ${
+                addEffect ? "animate-clickA lg:animate-clickB" : ""
               }`}
               onclick={addToCart}
               onAnimationEnd={() => {
@@ -208,7 +208,7 @@ const ProductDetails = () => {
         <Swiper
           slidesPerView={(windowWidth / 220).toFixed() * 1 + 0.2}
           spaceBetween={windowWidth < 768 ? 10 : 20}
-          className="items-strength"
+          mousewheel
         >
           {products.map((product) => (
             <SwiperSlide key={product.id}>
