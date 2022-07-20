@@ -18,6 +18,9 @@ const Header = ({ handleSideNav, handleSearch, menu }) => {
         <div className="h-[100%]">
           <Link
             to={"/"}
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
             className="relative h-[100%] before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:h-[100%] before:w-[76%] before:bg-center before:bg-no-repeat before:bg-contain before:bg-[url('../assets/images/logo.png')] md:before:hidden flex items-center"
           >
             <svg

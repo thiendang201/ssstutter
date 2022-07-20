@@ -45,6 +45,26 @@
   .nt5:nth-child(5n + 1) {
     @apply col-span-full md:col-auto;
   }
+
+  .disabled::after,
+  .disabled::before {
+    @apply top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] block content-[''] absolute w-[90%] h-[0.2rem] bg-[#f1f1f1] rounded;
+  }
+
+  .disabled::after {
+    @apply rotate-45;
+  }
+
+  .disabled::before {
+    @apply rotate-[-45deg];
+  }
+}
+.click-enter {
+  transform: scale(1);
+}
+
+.click-enter-active {
+  animation: click 0.3s ease-in-out;
 }
 
 .blur-enter {
@@ -116,6 +136,16 @@
   transition: max-height 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
   transform-origin: top left;
   animation: scaleZ 300ms ease-in-out forwards;
+}
+
+@keyframes click {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
 }
 
 @keyframes scaleZ {

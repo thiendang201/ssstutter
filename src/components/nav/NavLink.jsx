@@ -14,8 +14,11 @@ const NavLink = ({
     const parentClicked = clicked && type === "category";
     const isNotCate = type !== "category";
 
-    (parentClicked || isNotCate) && handleSideNav();
-    !clicked && type === "category" && e.preventDefault();
+    if (parentClicked || isNotCate) {
+      handleSideNav();
+      window.scrollTo(0, 0);
+    }
+    !clicked && !isNotCate && e.preventDefault();
     setClicked(!clicked);
   };
 
@@ -23,7 +26,10 @@ const NavLink = ({
   const childList = children.map(({ id, name }) => (
     <li key={id}>
       <Link
-        onClick={handleSideNav}
+        onClick={() => {
+          window.scrollTo(0, 0);
+          handleSideNav();
+        }}
         to={`${type}/${id}/${parentId}`}
         className="block w-[100%] p-[1rem] text-[1.4rem] uppercase font-[500] tracking-[0.13rem]"
       >

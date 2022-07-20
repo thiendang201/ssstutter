@@ -7,6 +7,7 @@ const Button = ({
   onclick,
   beforeColor,
   className,
+  onAnimationEnd,
 }) => {
   if (type === "underline")
     return (
@@ -22,15 +23,27 @@ const Button = ({
     return (
       <button
         onClick={onclick}
+        onAnimationEnd={onAnimationEnd}
         className={`p-[1rem] relative font-semibold text-[1.6rem] md:text-[1.8rem] border border-black rounded-[0.4rem] ${className}`}
       >
         {text}
       </button>
     );
 
+  if (type === "disabled") {
+    return (
+      <div
+        className={`p-[1rem] relative font-semibold text-[1.6rem] md:text-[1.8rem] text-white bg-[#d3d3d3] text-center rounded-[0.4rem]`}
+      >
+        {text}
+      </div>
+    );
+  }
+
   return (
     <button
       onClick={onclick}
+      onAnimationEnd={onAnimationEnd}
       className={`p-[1rem] relative font-semibold text-white text-[1.6rem] md:text-[1.8rem] bg-black rounded-[0.4rem] ${className}`}
     >
       {text}
