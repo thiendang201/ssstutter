@@ -180,8 +180,6 @@ const ProductsPage = () => {
     // type === "radio" && setFilter({ ...filter, [name]: value });
   };
 
-  console.log(filter);
-
   const onFilterClick = ({ target: { parentNode } }) => {
     parentNode.classList.toggle("max-h-[60vh]");
     parentNode.classList.toggle("max-h-[5.8rem]");

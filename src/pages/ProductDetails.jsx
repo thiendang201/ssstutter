@@ -7,8 +7,11 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Product from "../components/product/Product";
 import { filterProducts, getDetail } from "../services/productServices";
 import Button from "../shared/Button";
+import { useContext } from "react";
+import { Context } from "../components/Layout";
 
 const ProductDetails = () => {
+  const { addToCart } = useContext(Context);
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [products, setProducts] = useState([]);
@@ -19,6 +22,7 @@ const ProductDetails = () => {
     size: null,
   });
   const [addEffect, setAddEffect] = useState(false);
+  const [addMessage, setAddMessage] = useState("");
   const windowWidth = window.innerWidth;
 
   useEffect(() => {
@@ -34,7 +38,7 @@ const ProductDetails = () => {
 
         setVariant(availableColor || data.variants[0]);
         setSelected({
-          productId: productId,
+          productId: productId * 1,
           variantId: availableColor?.id,
           size: availableSize?.size,
         });
@@ -59,10 +63,14 @@ const ProductDetails = () => {
     switch (type) {
       case "color":
         setVariant(data);
+        setSelected({
+          ...selected,
+          variantId: data.id,
+        });
         break;
       case "size":
         setSelected({
-          productId: productId,
+          productId: productId * 1,
           variantId: variant.id,
           size: data,
         });
@@ -72,9 +80,22 @@ const ProductDetails = () => {
     }
   };
 
-  const addToCart = () => {
+  const add = () => {
+    const newItem = {
+      ...selected,
+      name: product.name,
+      price: product.price,
+      salePrice: product.salePrice,
+      img_url: product.img_url,
+      color: variant.name,
+      qty: 1,
+    };
+    addToCart(newItem);
     setAddEffect(true);
-    console.log(1);
+    setAddMessage("Đã thêm vào giỏ hàng");
+    setTimeout(() => {
+      setAddMessage("");
+    }, 2000);
   };
 
   return (
@@ -125,7 +146,7 @@ const ProductDetails = () => {
             <h2 className="text-[1.6rem] font-semibold">
               Chọn màu: {variant?.name}
             </h2>
-            <ul className="grid grid-cols-11 gap-[1.6rem] mt-[0.8rem]">
+            <ul className="grid grid-cols-4 gap-[1.6rem] mt-[0.8rem]">
               {product?.variants &&
                 product.variants.map((v) => (
                   <li key={v.id} className="relative">
@@ -150,7 +171,7 @@ const ProductDetails = () => {
           </div>
           <div className="mt-[2rem]">
             <h2 className="text-[1.6rem] font-semibold">Chọn size</h2>
-            <ul className="flex flex-wrap gap-[1.6rem] mt-[0.8rem]">
+            <ul className="grid grid-cols-4 gap-[1.6rem] mt-[0.8rem]">
               {variant?.sizes &&
                 variant.sizes.map(({ size, quantity }) => (
                   <li key={size} className="relative">
@@ -164,7 +185,7 @@ const ProductDetails = () => {
                     />
                     <label
                       htmlFor={`size${size}`}
-                      className={`block px-[2rem] py-[1rem] border-2 border-[#f1f1f1] text-[1.8rem] font-semibold text-center rounded-[0.4rem] transition-all duration-300 ${
+                      className={`block py-[1rem] border-2 border-[#f1f1f1] text-[1.8rem] font-semibold text-center rounded-[0.4rem] transition-all duration-300 ${
                         quantity !== 0
                           ? "lg:peer-hover:scale-[0.95] peer-checked:animate-clickA   lg:peer-checked:animate-clickB peer-checked:text-[#fff] peer-checked:border-[#000] peer-checked:bg-[#000]"
                           : "disabled"
@@ -176,18 +197,25 @@ const ProductDetails = () => {
                 ))}
             </ul>
           </div>
-          <div className="mt-[3rem]">
+          <div className="mt-[3rem] relative">
             <Button
               type={variant.qty === 0 ? "disabled" : ""}
               text={variant.qty === 0 ? "HẾT HÀNG" : "THÊM VÀO GIỎ HÀNG"}
               className={`w-[100%] lg:hover:scale-[0.95] ${
                 addEffect ? "animate-clickA lg:animate-clickB" : ""
               }`}
-              onclick={addToCart}
+              onclick={add}
               onAnimationEnd={() => {
                 setAddEffect(false);
               }}
             />
+            {addMessage && (
+              <div className="absolute bottom-[120%] left-[50%] translate-x-[-50%] min-w-max">
+                <span className="block px-[1.6rem] py-[0.8rem] shadow-lg rounded-[0.6rem] text-[1.4rem] font-semibold bg-white">
+                  {addMessage}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

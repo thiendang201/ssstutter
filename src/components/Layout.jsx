@@ -6,12 +6,19 @@ import SideNav from "./nav/SideNav";
 import Search from "../components/modals/Search";
 import { getMenu } from "../services/menuServices";
 import Footer from "../footer/Footer";
+import MiniCart from "./modals/MiniCart";
+import { useRef } from "react";
 
 const Context = React.createContext();
 const Layout = () => {
   const [openedSideNav, setOpenedSideNav] = useState(false);
   const [openedSearch, setOpenedSearch] = useState(false);
   const [menu, setMenu] = useState([]);
+  const cartRef = useRef();
+  const headerRef = useRef();
+  const { addToCart, openMiniCart, closeMiniCart } = cartRef.current || {};
+  const { setCartQty } = headerRef.current || {};
+
   useEffect(() => {
     async function fetchData() {
       const menu_data = await getMenu();
@@ -32,11 +39,20 @@ const Layout = () => {
   };
 
   return (
-    <Context.Provider value={{ closeSearch }}>
+    <Context.Provider
+      value={{
+        closeSearch,
+        openMiniCart,
+        closeMiniCart,
+        addToCart,
+        setCartQty,
+      }}
+    >
       <Header
         handleSideNav={handleSideNav}
         handleSearch={handleSearch}
         menu={menu}
+        ref={headerRef}
       />
       <CSSTransition
         in={openedSideNav}
@@ -55,6 +71,7 @@ const Layout = () => {
       >
         <Search handleSearch={handleSearch} />
       </CSSTransition>
+      <MiniCart ref={cartRef} />
       <main className="mt-[5.8rem]">
         <Outlet />
       </main>

@@ -1,3 +1,5 @@
+import { useImperativeHandle } from "react";
+import { forwardRef, useState } from "react";
 import { useContext } from "react";
 import {
   HiOutlineMenuAlt2,
@@ -8,8 +10,17 @@ import { Link } from "react-router-dom";
 import { Context } from "../components/Layout";
 import NavLink from "../components/nav/NavLink";
 
-const Header = ({ handleSideNav, handleSearch, menu }) => {
-  const { closeSearch } = useContext(Context);
+const Header = forwardRef(({ handleSideNav, handleSearch, menu }, ref) => {
+  const { closeSearch, openMiniCart } = useContext(Context);
+  const [cartQty, setCartQty] = useState(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    return cartItems.length;
+  });
+
+  useImperativeHandle(ref, () => ({
+    setCartQty,
+  }));
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#ececec] z-10 h-[5.8rem]">
       <nav className="grid px-[0.6rem] md:px-[1.6rem] lg:px-[6.4rem] grid-cols-[25%_1fr_25%] md:grid-cols-[15%_1fr_15%] gap-x-[5%] bg-white items-center h-[100%]">
@@ -55,13 +66,18 @@ const Header = ({ handleSideNav, handleSearch, menu }) => {
           <button className="p-3.5" onClick={handleSearch}>
             <HiOutlineSearch size={"2.4rem"} className="scale-x-[-1]" />
           </button>
-          <button className="p-3.5">
+          <button className="p-3.5 relative" onClick={openMiniCart}>
             <HiOutlineShoppingBag size={"2.4rem"} />
+            {cartQty > 0 && (
+              <span className="block absolute top-[50%] left-[40%] rounded-full bg-[#b80f0a] text-white font-semibold text-[1rem] px-[0.6rem]">
+                {cartQty < 100 ? cartQty : "99+"}
+              </span>
+            )}
           </button>
         </div>
       </nav>
     </header>
   );
-};
+});
 
 export default Header;
