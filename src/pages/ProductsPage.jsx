@@ -168,16 +168,6 @@ const ProductsPage = () => {
       start: 0,
       touched: { ...filter.touched, [name]: true },
     });
-    // if (type === "checkbox")
-    // type === "checkbox" &&
-    //   setFilter({
-    //     ...filter,
-    //     [name]: filter[name].includes(value * 1)
-    //       ? filter[name].filter((item) => item !== value * 1)
-    //       : [...new Set([...filter[name], value * 1])],
-    //     // [...filter[name], value * 1],
-    //   });
-    // type === "radio" && setFilter({ ...filter, [name]: value });
   };
 
   const onFilterClick = ({ target: { parentNode } }) => {

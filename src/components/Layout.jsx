@@ -8,6 +8,7 @@ import { getMenu } from "../services/menuServices";
 import Footer from "../footer/Footer";
 import MiniCart from "./modals/MiniCart";
 import { useRef } from "react";
+import Overlay from "./modals/Overlay";
 
 const Context = React.createContext();
 const Layout = () => {
@@ -16,8 +17,11 @@ const Layout = () => {
   const [menu, setMenu] = useState([]);
   const cartRef = useRef();
   const headerRef = useRef();
-  const { addToCart, openMiniCart, closeMiniCart } = cartRef.current || {};
+  const overlayRef = useRef();
+  const { addToCart, openMiniCart, closeMiniCart, loadItems } =
+    cartRef.current || {};
   const { setCartQty } = headerRef.current || {};
+  const { openOverlay, closeOverlay } = overlayRef.current || {};
 
   useEffect(() => {
     async function fetchData() {
@@ -46,6 +50,9 @@ const Layout = () => {
         closeMiniCart,
         addToCart,
         setCartQty,
+        loadItems,
+        openOverlay,
+        closeOverlay,
       }}
     >
       <Header
@@ -72,6 +79,7 @@ const Layout = () => {
         <Search handleSearch={handleSearch} />
       </CSSTransition>
       <MiniCart ref={cartRef} />
+      <Overlay ref={overlayRef} />
       <main className="mt-[5.8rem]">
         <Outlet />
       </main>

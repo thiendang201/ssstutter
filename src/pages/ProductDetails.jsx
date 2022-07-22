@@ -4,6 +4,8 @@ import NumberFormat from "react-number-format";
 import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import { CgDanger } from "react-icons/cg";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 import Product from "../components/product/Product";
 import { filterProducts, getDetail } from "../services/productServices";
 import Button from "../shared/Button";
@@ -20,9 +22,13 @@ const ProductDetails = () => {
     productId: null,
     variantId: null,
     size: null,
+    maxQty: null,
   });
   const [addEffect, setAddEffect] = useState(false);
-  const [addMessage, setAddMessage] = useState("");
+  const [addMessage, setAddMessage] = useState({
+    mess: "",
+    type: "success",
+  });
   const windowWidth = window.innerWidth;
 
   useEffect(() => {
@@ -41,6 +47,7 @@ const ProductDetails = () => {
           productId: productId * 1,
           variantId: availableColor?.id,
           size: availableSize?.size,
+          maxQty: availableSize?.quantity,
         });
       }
 
@@ -62,17 +69,28 @@ const ProductDetails = () => {
   const onChange = (data, type) => (e) => {
     switch (type) {
       case "color":
+        const { sizes } = data;
+        const currentSize = sizes.find(({ size }) => size === selected.size);
+        const availableSize =
+          currentSize?.quantity > 0
+            ? currentSize
+            : sizes.find(({ quantity }) => quantity !== 0);
+
         setVariant(data);
         setSelected({
           ...selected,
-          variantId: data.id,
+          variantId: data?.id,
+          size: availableSize?.size,
+          maxQty: availableSize?.quantity,
         });
+
         break;
       case "size":
+        const { size, quantity: maxQty } = data;
         setSelected({
-          productId: productId * 1,
-          variantId: variant.id,
-          size: data,
+          ...selected,
+          size,
+          maxQty,
         });
         break;
       default:
@@ -86,15 +104,16 @@ const ProductDetails = () => {
       name: product.name,
       price: product.price,
       salePrice: product.salePrice,
-      img_url: product.img_url,
+      img_url: variant.thumbnail,
       color: variant.name,
       qty: 1,
     };
-    addToCart(newItem);
+    const response = addToCart(newItem);
+
     setAddEffect(true);
-    setAddMessage("Đã thêm vào giỏ hàng");
+    setAddMessage(response);
     setTimeout(() => {
-      setAddMessage("");
+      setAddMessage({ ...addMessage, mess: "" });
     }, 2000);
   };
 
@@ -159,7 +178,7 @@ const ProductDetails = () => {
                     />
                     <label
                       htmlFor={`variant${v.id}`}
-                      className={`shadow-lg block w-[100%] pt-[100%] bg-center bg-no-repeat bg-cover rounded-[0.4rem] transition-all duration-300 border-2 border-[#d3d3d3] lg:peer-hover:scale-[0.95]  peer-checked:border-[#000] peer-checked:animate-clickA lg:peer-checked:animate-clickB ${
+                      className={`shadow-lg block w-[100%] pt-[100%] bg-center bg-no-repeat bg-cover rounded-[0.4rem] transition-all duration-300 border-2 border-[#d3d3d3] lg:peer-hover:scale-[0.95]  peer-checked:border-[#000] peer-checked:animate-clickA lg:peer-checked:animate-clickB cursor-pointer peer-disabled:cursor-default ${
                         v.qty === 0 ? "disabled" : ""
                       }`}
                       style={{ backgroundImage: `url(${v.thumbnail})` }}
@@ -170,7 +189,12 @@ const ProductDetails = () => {
             </ul>
           </div>
           <div className="mt-[2rem]">
-            <h2 className="text-[1.6rem] font-semibold">Chọn size</h2>
+            <div className="flex justify-between items-baseline">
+              <h2 className="text-[1.6rem] font-semibold">Chọn size</h2>
+              {selected.maxQty <= 10 && (
+                <span className="text-[#ff3548] text-[1.4rem] font-medium">{`Còn ${selected.maxQty} sản phẩm`}</span>
+              )}
+            </div>
             <ul className="grid grid-cols-4 gap-[1.6rem] mt-[0.8rem]">
               {variant?.sizes &&
                 variant.sizes.map(({ size, quantity }) => (
@@ -179,13 +203,13 @@ const ProductDetails = () => {
                       type="radio"
                       className="peer absolute appearance-none"
                       id={`size${size}`}
-                      onChange={onChange(size, "size")}
+                      onChange={onChange({ size, quantity }, "size")}
                       checked={selected.size === size}
                       disabled={quantity === 0}
                     />
                     <label
                       htmlFor={`size${size}`}
-                      className={`block py-[1rem] border-2 border-[#f1f1f1] text-[1.8rem] font-semibold text-center rounded-[0.4rem] transition-all duration-300 ${
+                      className={`block py-[1rem] border-2 border-[#f1f1f1] text-[1.8rem] font-semibold text-center rounded-[0.4rem] transition-all duration-300 cursor-pointer peer-disabled:cursor-default ${
                         quantity !== 0
                           ? "lg:peer-hover:scale-[0.95] peer-checked:animate-clickA   lg:peer-checked:animate-clickB peer-checked:text-[#fff] peer-checked:border-[#000] peer-checked:bg-[#000]"
                           : "disabled"
@@ -209,11 +233,14 @@ const ProductDetails = () => {
                 setAddEffect(false);
               }}
             />
-            {addMessage && (
-              <div className="absolute bottom-[120%] left-[50%] translate-x-[-50%] min-w-max">
-                <span className="block px-[1.6rem] py-[0.8rem] shadow-lg rounded-[0.6rem] text-[1.4rem] font-semibold bg-white">
-                  {addMessage}
-                </span>
+            {addMessage.mess && (
+              <div className="absolute bottom-[120%] left-[50%] translate-x-[-50%] w-max max-w-[100%] flex gap-[1.6rem] items-center px-[1.6rem] py-[0.8rem] shadow-lg rounded-[0.6rem] bg-white">
+                {addMessage.type === "success" ? (
+                  <AiOutlineCheckCircle size={28} color="#2abbac" />
+                ) : (
+                  <CgDanger size={36} color="#ff3548" />
+                )}
+                <p className="text-[1.4rem] font-semibold">{addMessage.mess}</p>
               </div>
             )}
           </div>

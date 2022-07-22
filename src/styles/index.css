@@ -48,7 +48,7 @@
 
   .disabled::after,
   .disabled::before {
-    @apply top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] block content-[''] absolute w-[90%] h-[0.2rem] bg-[#f1f1f1] rounded;
+    @apply top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] block content-[''] absolute h-[90%] w-[0.2rem] bg-[#f1f1f1] rounded;
   }
 
   .disabled::after {

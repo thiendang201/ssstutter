@@ -31,7 +31,7 @@ const Product = ({
       </div>
       {discount !== 0 && (
         <div className="absolute top-0 right-0 p-[1rem] rounded-bl-[0.6rem] bg-[#c1272d] text-[1.2rem] font-semibold text-white">
-          <span>{discount}%</span>
+          <span>-{discount}%</span>
         </div>
       )}
       <div className="text-left font-semibold mt-[0.4rem] ml-[0.6rem]">
