@@ -116,10 +116,10 @@ const MiniCart = forwardRef((props, ref) => {
         setItems(items);
         break;
       case "decrease":
-        // if (item.qty === 1) {
-        //   remove(variantId, size);
-        //   break;
-        // }
+        if (item.qty === 1) {
+          confirmRemove(variantId, size)();
+          break;
+        }
 
         item.qty--;
 
@@ -168,7 +168,7 @@ const MiniCart = forwardRef((props, ref) => {
         classNames="slide-up"
         unmountOnExit
       >
-        <div className="fixed inset-0 bg-white z-[12]">
+        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] lg:left-[66%] bg-white z-[12]">
           <div className="flex justify-between items-center pr-[2rem] pl-[0.4rem] border-b border-[#f1f1f1]">
             <button className="py-[1.2rem] px-[1.6rem]" onClick={closeMiniCart}>
               <MdKeyboardBackspace size={32} />
@@ -183,7 +183,7 @@ const MiniCart = forwardRef((props, ref) => {
               </h2>
             </div>
           )}
-          <ul className="px-[2rem] pt-[3rem] pb-[1rem] overflow-y-auto max-h-[72%]">
+          <ul className="px-[2rem] pt-[3rem] pb-[1rem] overflow-y-auto max-h-[72%] lg:max-h-[60%] lg:scrollbar">
             {cartItems.map(
               ({
                 productId,
@@ -252,10 +252,7 @@ const MiniCart = forwardRef((props, ref) => {
                       <div className="inline-flex items-strength mt-[1rem] border border-[#f1f1f1] rounded-[0.6rem]">
                         <button
                           onClick={onChange("decrease", variantId, size)}
-                          className={`text-[2rem] font-semibold px-[1.6rem] ${
-                            qty <= 1 ? "bg-[#f1f1f1] text-[#aeaeae]" : ""
-                          }`}
-                          disabled={qty <= 1}
+                          className={`text-[2rem] font-semibold px-[1.6rem]`}
                         >
                           -
                         </button>
