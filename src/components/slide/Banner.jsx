@@ -4,7 +4,7 @@ import "swiper/css";
 import { Link } from "react-router-dom";
 
 const Banner = ({ bannerList }) => {
-  const isMobile = window.innerWidth <= 740;
+  const isMobile = window.innerWidth <= 768;
   return (
     <Swiper
       autoplay={{

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { capitalize } from "../utils/capitalizeString";
 
 const Button = ({
@@ -7,8 +8,9 @@ const Button = ({
   onclick,
   beforeColor,
   className,
-  onAnimationEnd,
 }) => {
+  const [clickEffect, setClickEffect] = useState(false);
+
   if (type === "underline")
     return (
       <button
@@ -22,9 +24,16 @@ const Button = ({
   if (type === "outline")
     return (
       <button
-        onClick={onclick}
-        onAnimationEnd={onAnimationEnd}
-        className={`p-[1rem] relative  font-semibold text-[1.6rem] md:text-[1.8rem] border border-black rounded-[0.4rem] ${className}`}
+        onClick={() => {
+          setClickEffect(true);
+          onclick();
+        }}
+        onAnimationEnd={() => {
+          setClickEffect(false);
+        }}
+        className={`p-[1rem] relative  font-semibold text-[1.6rem] md:text-[1.8rem] border border-black rounded-[0.4rem] ${className} ${
+          clickEffect ? "animate-clickA lg:animate-clickB" : ""
+        }`}
       >
         {text}
       </button>
@@ -42,9 +51,16 @@ const Button = ({
 
   return (
     <button
-      onClick={onclick}
-      onAnimationEnd={onAnimationEnd}
-      className={`p-[1rem] relative font-semibold text-white text-[1.6rem] md:text-[1.8rem] bg-black rounded-[0.4rem] transition-all duration-300 ${className}`}
+      onClick={() => {
+        setClickEffect(true);
+        onclick();
+      }}
+      onAnimationEnd={() => {
+        setClickEffect(false);
+      }}
+      className={`p-[1rem] relative font-semibold text-white text-[1.6rem] md:text-[1.8rem] bg-black rounded-[0.4rem] transition-all duration-300 ${className} ${
+        clickEffect ? "animate-clickA lg:animate-clickB" : ""
+      }`}
     >
       {text}
     </button>

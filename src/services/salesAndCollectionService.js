@@ -6,4 +6,15 @@ function getBanner() {
   return getData(url);
 }
 
-export { getBanner };
+function getCollection(collectionId, start) {
+  const url =
+    BASE_URL + `collection?collectionId=${collectionId}&start=${start}`;
+  return getData(url);
+}
+function getProductsCollection(collectionId, start) {
+  const url =
+    BASE_URL + `productsCollection?collectionId=${collectionId}&start=${start}`;
+  return getData(url);
+}
+
+export { getBanner, getCollection, getProductsCollection };

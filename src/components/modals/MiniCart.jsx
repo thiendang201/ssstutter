@@ -16,7 +16,6 @@ const MiniCart = forwardRef((props, ref) => {
   const [cartItems, setCartItems] = useState(loadItems());
   const { setCartQty, closeSearch, openOverlay, closeOverlay } =
     useContext(Context);
-  const [paymentEffect, setPaymentEffect] = useState(false);
   const [price, setPrice] = useState({
     sum: 0,
     sale: 0,
@@ -168,7 +167,7 @@ const MiniCart = forwardRef((props, ref) => {
         classNames="slide-up"
         unmountOnExit
       >
-        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] lg:left-[66%] bg-white z-[12]">
+        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12]">
           <div className="flex justify-between items-center pr-[2rem] pl-[0.4rem] border-b border-[#f1f1f1]">
             <button className="py-[1.2rem] px-[1.6rem]" onClick={closeMiniCart}>
               <MdKeyboardBackspace size={32} />
@@ -176,8 +175,12 @@ const MiniCart = forwardRef((props, ref) => {
             <h2 className="font-semibold text-[1.8rem]">Giỏ hàng</h2>
           </div>
           {cartItems.length === 0 && (
-            <div>
-              <img src={EmptyCart} alt="empty-cart" />
+            <div className="flex flex-col items-center md:mt-[6rem]">
+              <img
+                src={EmptyCart}
+                alt="empty-cart"
+                className="md:max-w-[50%]"
+              />
               <h2 className="font-semibold text-[1.6rem] text-center">
                 Không có sản phẩm nào!
               </h2>
@@ -204,6 +207,7 @@ const MiniCart = forwardRef((props, ref) => {
                         to={`../product/${productId}`}
                         onClick={() => {
                           closeSearch();
+                          closeMiniCart();
                           window.scrollTo(0, 0);
                         }}
                         style={{ backgroundImage: `url(${img_url})` }}
@@ -257,7 +261,7 @@ const MiniCart = forwardRef((props, ref) => {
                           -
                         </button>
                         <input
-                          className="text-[1.6rem] font-semibold w-[5.6rem] border-x border-[#f1f1f1] outline-none text-center"
+                          className="text-[1.6rem] font-semibold w-[5.6rem] border-x border-[#f1f1f1] outline-none text-center appearance-none"
                           type="number"
                           value={(qty + "").replace(/^0*/g, "")}
                           onChange={onChange("", variantId, size)}
@@ -328,15 +332,7 @@ const MiniCart = forwardRef((props, ref) => {
             </div>
             <Button
               text="THANH TOÁN"
-              className={`w-[100%] lg:hover:scale-[0.95] mt-[2rem] ${
-                paymentEffect ? "animate-clickA lg:animate-clickB" : ""
-              }`}
-              onclick={() => {
-                setPaymentEffect(true);
-              }}
-              onAnimationEnd={() => {
-                setPaymentEffect(false);
-              }}
+              className={`w-[100%] lg:hover:scale-[0.95] mt-[2rem] `}
             />
           </div>
         </div>

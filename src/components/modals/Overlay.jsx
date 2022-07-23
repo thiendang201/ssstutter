@@ -24,7 +24,10 @@ const Overlay = forwardRef((props, ref) => {
   return (
     <CSSTransition in={display} timeout={300} classNames="blur" unmountOnExit>
       <div className="fixed inset-0 z-[9999] px-[2rem] flex items-center justify-center">
-        <div className="absolute z-[-1] bg-[#000] opacity-30 inset-0"></div>
+        <div
+          onClick={closeOverlay}
+          className="absolute z-[-1] bg-[#000] opacity-30 inset-0"
+        ></div>
         {content}
       </div>
     </CSSTransition>

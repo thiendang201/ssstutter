@@ -1,4 +1,4 @@
-import { useImperativeHandle } from "react";
+import { useEffect, useImperativeHandle } from "react";
 import { forwardRef, useState } from "react";
 import { useContext } from "react";
 import {
@@ -11,11 +11,12 @@ import { Context } from "../components/Layout";
 import NavLink from "../components/nav/NavLink";
 
 const Header = forwardRef(({ handleSideNav, handleSearch, menu }, ref) => {
-  const { closeSearch, openMiniCart } = useContext(Context);
-  const [cartQty, setCartQty] = useState(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    return cartItems.length;
-  });
+  const { closeSearch, openMiniCart, loadItems } = useContext(Context);
+  const [cartQty, setCartQty] = useState(0);
+
+  useEffect(() => {
+    loadItems && setCartQty(loadItems().length);
+  }, [loadItems]);
 
   useImperativeHandle(ref, () => ({
     setCartQty,

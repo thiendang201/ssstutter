@@ -5,12 +5,13 @@ import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { CgDanger } from "react-icons/cg";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import Product from "../components/product/Product";
 import { filterProducts, getDetail } from "../services/productServices";
 import Button from "../shared/Button";
 import { useContext } from "react";
 import { Context } from "../components/Layout";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { CSSTransition } from "react-transition-group";
 
 const ProductDetails = () => {
   const { addToCart } = useContext(Context);
@@ -24,10 +25,10 @@ const ProductDetails = () => {
     size: null,
     maxQty: null,
   });
-  const [addEffect, setAddEffect] = useState(false);
   const [addMessage, setAddMessage] = useState({
     mess: "",
     type: "success",
+    visible: false,
   });
   const windowWidth = window.innerWidth;
 
@@ -65,6 +66,14 @@ const ProductDetails = () => {
 
     getProduct();
   }, [productId]);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setAddMessage({ ...addMessage, visible: false });
+    }, 2500);
+
+    return () => clearTimeout(timeOut);
+  }, [addMessage]);
 
   const onChange = (data, type) => (e) => {
     switch (type) {
@@ -110,11 +119,7 @@ const ProductDetails = () => {
     };
     const response = addToCart(newItem);
 
-    setAddEffect(true);
-    setAddMessage(response);
-    setTimeout(() => {
-      setAddMessage({ ...addMessage, mess: "" });
-    }, 2000);
+    setAddMessage({ ...response, visible: true });
   };
 
   return (
@@ -225,24 +230,25 @@ const ProductDetails = () => {
             <Button
               type={variant.qty === 0 ? "disabled" : ""}
               text={variant.qty === 0 ? "HẾT HÀNG" : "THÊM VÀO GIỎ HÀNG"}
-              className={`w-[100%] lg:hover:scale-[0.95] ${
-                addEffect ? "animate-clickA lg:animate-clickB" : ""
-              }`}
+              className={`w-[100%] lg:hover:scale-[0.95]`}
               onclick={add}
-              onAnimationEnd={() => {
-                setAddEffect(false);
-              }}
             />
-            {addMessage.mess && (
+            <CSSTransition
+              in={addMessage.visible}
+              timeout={300}
+              classNames="blur"
+              unmountOnExit
+            >
               <div className="absolute bottom-[120%] left-[50%] translate-x-[-50%] w-max max-w-[100%] flex gap-[1.6rem] items-center px-[1.6rem] py-[0.8rem] shadow-lg rounded-[0.6rem] bg-white">
-                {addMessage.type === "success" ? (
+                {addMessage.type === "success" && (
                   <AiOutlineCheckCircle size={28} color="#2abbac" />
-                ) : (
+                )}
+                {addMessage.type === "danger" && (
                   <CgDanger size={36} color="#ff3548" />
                 )}
                 <p className="text-[1.4rem] font-semibold">{addMessage.mess}</p>
               </div>
-            )}
+            </CSSTransition>
           </div>
         </div>
       </div>
