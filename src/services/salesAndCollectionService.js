@@ -6,15 +6,34 @@ function getBanner() {
   return getData(url);
 }
 
+function getSales(salesId, start) {
+  const url = BASE_URL + `sales?salesId=${salesId}&start=${start}`;
+  return getData(url);
+}
+
+function getProductsSales(salesId, size, cateId, start) {
+  const url =
+    BASE_URL +
+    `productsSales?salesId=${salesId}&size=${size}&cateId=${cateId}&start=${start}`;
+  return getData(url);
+}
+
 function getCollection(collectionId, start) {
   const url =
     BASE_URL + `collection?collectionId=${collectionId}&start=${start}`;
   return getData(url);
 }
+
 function getProductsCollection(collectionId, start) {
   const url =
     BASE_URL + `productsCollection?collectionId=${collectionId}&start=${start}`;
   return getData(url);
 }
 
-export { getBanner, getCollection, getProductsCollection };
+export {
+  getBanner,
+  getSales,
+  getProductsSales,
+  getCollection,
+  getProductsCollection,
+};

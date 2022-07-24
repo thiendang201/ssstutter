@@ -4,6 +4,7 @@ import Collection from "./pages/Collection";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
 import ProductsPage from "./pages/ProductsPage";
+import Sales from "./pages/Sales";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="category/:cateId/:parentId" element={<ProductsPage />} />
         <Route path="product/:productId" element={<ProductDetails />} />
         <Route path="collection/:collectionId" element={<Collection />} />
+        <Route path="sale/:salesId" element={<Sales />} />
       </Route>
     </Routes>
   );

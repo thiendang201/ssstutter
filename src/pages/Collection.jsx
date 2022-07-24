@@ -4,7 +4,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import Loading from "../components/product/Loading";
 import Product from "../components/product/Product";
-import Products from "../components/product/Products";
 import {
   getCollection,
   getProductsCollection,
@@ -34,7 +33,6 @@ const Collection = () => {
         collectionId,
         collection.products.length
       );
-      console.log(collection.products.length);
       setCollection({
         ...collection,
         products: [...collection.products, ...rs],
