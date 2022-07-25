@@ -1,23 +1,27 @@
 # Clone SSSTUTTER
-An e-commerce web app cloned from [ssstutter](https://ssstutter.com/) built with ReactJs, TailwindCSS, FastAPI and more
+An e-commerce web app cloned from [ssstutter](https://ssstutter.com/) built with ReactJs, TailwindCSS, FastAPI and more.
+## Live Demo: https://
 # Main technologies
 - Frond-End
   - ReactJs
   - Tailwind CSS
+  - Axios
   - [Swiper](https://swiperjs.com/)
 - Back-End
   - Fast API
   - My SQL
   - Cloundinary
-# Main features
+# Features
 - Filter products
 - Search product
 - Add product to cart
 - Remove product from cart
 - Update the number of products in the cart
 - View product detail
-- View new products
-- View weekly best products
+- View a list of new products
+- View a list of weekly best products
 - View a list of products on sale
-- View Collection
+- View product collection
+- infinite scroll
+- Responsive
 # Previews
