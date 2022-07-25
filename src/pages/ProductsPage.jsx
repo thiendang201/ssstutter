@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ import Button from "../shared/Button";
 import Filter from "../components/filter/Filter";
 
 const ProductsPage = () => {
-  const { cateId, parentId } = useParams();
+  const { cateId = 0, parentId = 0 } = useParams();
   const [category, setCategory] = useState({ id: cateId, name: "", text: "" });
   const [childrenCategories, setChildrenCategories] = useState([]);
   const [productList, setProductList] = useState([]);
@@ -48,14 +48,26 @@ const ProductsPage = () => {
       sort: false,
     },
   });
+  let navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      setMaxPrice(await getMaxPrice());
-      setCategory(await getCategoryInfo(cateId));
-      setChildrenCategories(await getChildrenCategories(parentId || cateId));
-      setSizes(await getSizes());
-      setColors(await getColors());
+      Promise.all([
+        getMaxPrice(),
+        getCategoryInfo(cateId),
+        getChildrenCategories(parentId || cateId),
+        getSizes(),
+        getColors(),
+      ]).then((values) => {
+        const [maxPrice, cateInfo, childrenCategories, sizes, colors] = values;
+        !cateInfo?.id && navigate("../NotFound", { replace: true });
+
+        setMaxPrice(maxPrice);
+        setCategory((prev) => ({ ...prev, ...cateInfo }));
+        setChildrenCategories(childrenCategories);
+        setSizes(sizes);
+        setColors(colors);
+      });
     }
 
     fetchData();
@@ -63,15 +75,16 @@ const ProductsPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const { total, products } = await filterProducts({
-        start: 0,
-        colors: [],
-        sizes: [],
-        sort: "desc",
-        price: [0, -1],
-        cateId: category.id,
-        limit: window.innerWidth < 768 ? 5 : 9,
-      });
+      const { total, products } =
+        (await filterProducts({
+          start: 0,
+          colors: [],
+          sizes: [],
+          sort: "desc",
+          price: [0, -1],
+          cateId: category.id,
+          limit: window.innerWidth < 768 ? 5 : 9,
+        })) || {};
       setProductList(products);
       setTotal(total);
     }
@@ -81,10 +94,11 @@ const ProductsPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const { total, products } = await filterProducts({
-        ...filter,
-        cateId: category.id,
-      });
+      const { total, products } =
+        (await filterProducts({
+          ...filter,
+          cateId: category.id,
+        })) || {};
       if (filter.start === 0) {
         setProductList(products);
       } else {
@@ -239,7 +253,7 @@ const ProductsPage = () => {
             classNames="dialog-up"
             unmountOnExit
           >
-            <ul className="shadow-lg bg-white rounded-[0.4rem] absolute top-[100%] p-[2rem] pt-[1rem] left-0 min-w-max max-w-[80vh] max-h-[70vh] z-10">
+            <ul className="shadow-lg bg-white rounded-b-[0.4rem] absolute top-[100%] p-[2rem] pt-[1rem] left-[-2rem] min-w-max max-w-[80vh] max-h-[70vh] z-1 overflow-y-auto scrollbar">
               {childrenCategories.map((category) => (
                 <li
                   key={category.id}
@@ -248,7 +262,7 @@ const ProductsPage = () => {
                   <Link
                     to="#"
                     onClick={changeCategory(category)}
-                    className="font-semibold text-[1.4rem] p-[1rem] block"
+                    className="font-semibold text-[1.4rem] py-[1rem] block"
                   >
                     {category.name}
                   </Link>
@@ -270,7 +284,7 @@ const ProductsPage = () => {
             classNames="slide-up"
             unmountOnExit
           >
-            <div className="fixed inset-0 md:right-[50%] z-[2] bg-white mt-[5.8rem] flex flex-col justify-between">
+            <div className="fixed inset-0 md:left-[50%] z-[2] bg-white mt-[5.8rem] flex flex-col justify-between">
               <Filter
                 filter={filter}
                 colors={colors}

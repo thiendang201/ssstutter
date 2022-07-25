@@ -1,6 +1,7 @@
 import { ImFacebook, ImYoutube } from "react-icons/im";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaTiktok } from "react-icons/fa";
+import { Link, useHref } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -66,7 +67,12 @@ const Footer = () => {
 
       <p className="text-[#acacac] text-[1.4rem] font-medium border-t border-[#bbb] mt-[4rem] pt-[4rem]">
         Clone{" "}
-        <a className="font-semibold hover:opacity-80" href="ssstutter.com">
+        <a
+          className="font-semibold hover:opacity-80"
+          href="https://ssstutter.com"
+          target="_blank"
+          rel="noreferrer"
+        >
           ssstutter
         </a>
       </p>

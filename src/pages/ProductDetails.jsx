@@ -1,20 +1,26 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import NumberFormat from "react-number-format";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { CSSTransition } from "react-transition-group";
+import { useContext } from "react";
 import { CgDanger } from "react-icons/cg";
+import { RiRulerLine } from "react-icons/ri";
+
 import Product from "../components/product/Product";
 import { filterProducts, getDetail } from "../services/productServices";
 import Button from "../shared/Button";
-import { useContext } from "react";
 import { Context } from "../components/Layout";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { CSSTransition } from "react-transition-group";
+import NoImg from "../assets/images/No_image.png";
+import HimSize from "../assets/images/HimSize.jpg";
+import HerSize from "../assets/images/HerSize.jpg";
+import SizeChart from "../components/modals/SizeChart";
 
 const ProductDetails = () => {
-  const { addToCart } = useContext(Context);
+  const { addToCart, openOverlay, closeOverlay } = useContext(Context);
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [products, setProducts] = useState([]);
@@ -31,17 +37,21 @@ const ProductDetails = () => {
     visible: false,
   });
   const windowWidth = window.innerWidth;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getProduct = async () => {
       const data = await getDetail(productId);
       const { variants } = data;
+      !data?.id && navigate("../NotFound");
+
       setProduct(data);
 
       if (variants) {
-        const availableColor = variants.find(({ qty }) => qty !== 0);
-        const { sizes } = availableColor;
-        const availableSize = sizes.find(({ quantity }) => quantity !== 0);
+        const availableColor = variants.find(({ qty }) => qty !== 0) || {};
+        const { sizes = [] } = availableColor;
+        const availableSize =
+          sizes.find(({ quantity }) => quantity !== 0) || {};
 
         setVariant(availableColor || data.variants[0]);
         setSelected({
@@ -58,14 +68,14 @@ const ProductDetails = () => {
         sizes: [],
         sort: "desc",
         price: [0, -1],
-        cateId: data.categoryId,
+        cateId: data?.categoryId || 0,
         limit: 10,
       });
       setProducts(products.filter(({ id }) => id !== productId * 1));
     };
 
     getProduct();
-  }, [productId]);
+  }, [navigate, productId]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -122,9 +132,31 @@ const ProductDetails = () => {
     setAddMessage({ ...response, visible: true });
   };
 
+  const openSizeChart = () => {
+    const list = [
+      {
+        gender: "nam",
+        img: HimSize,
+      },
+      {
+        gender: "nữ",
+        img: HerSize,
+      },
+    ];
+
+    openOverlay(<SizeChart list={list} />);
+  };
+
   return (
     <div className="md:grid md:grid-cols-3 pb-[2rem]">
       <div className="md:col-span-2 md:col-end-3">
+        {variant?.images?.length === 0 && (
+          <div className="relative pt-[125%] md:pt-[60%] bg-[#f1f1f1]">
+            <p className="font-semibold text-[1.8rem] text-[#aeaeae] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              Chưa có hình ảnh
+            </p>
+          </div>
+        )}
         <ul className="w-[100%] flex overflow-x-auto snap-x snap-mandatory md:block md:snap-none md:overflow-x-visible lg:grid grid-cols-2">
           {variant?.images &&
             variant.images.map(({ id, url }) => (
@@ -186,7 +218,9 @@ const ProductDetails = () => {
                       className={`shadow-lg block w-[100%] pt-[100%] bg-center bg-no-repeat bg-cover rounded-[0.4rem] transition-all duration-300 border-2 border-[#d3d3d3] lg:peer-hover:scale-[0.95]  peer-checked:border-[#000] peer-checked:animate-clickA lg:peer-checked:animate-clickB cursor-pointer peer-disabled:cursor-default ${
                         v.qty === 0 ? "disabled" : ""
                       }`}
-                      style={{ backgroundImage: `url(${v.thumbnail})` }}
+                      style={{
+                        backgroundImage: `url(${v.thumbnail || NoImg})`,
+                      }}
                     ></label>
                     {/* <div className="opacity-0 transition-all duration-300 peer-checked:opacity-100 absolute z-[-1] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[0.4rem] bg-[#000] w-[50%] h-[50%] peer-checked:w-[105%] peer-checked:h-[105%]"></div> */}
                   </li>
@@ -196,10 +230,18 @@ const ProductDetails = () => {
           <div className="mt-[2rem]">
             <div className="flex justify-between items-baseline">
               <h2 className="text-[1.6rem] font-semibold">Chọn size</h2>
-              {selected.maxQty <= 10 && (
-                <span className="text-[#ff3548] text-[1.4rem] font-medium">{`Còn ${selected.maxQty} sản phẩm`}</span>
-              )}
+
+              <button
+                className="font-semibold text-[1.6rem] flex items-center gap-[0.4rem] hover:opacity-90 transition-all duration-300"
+                onClick={openSizeChart}
+              >
+                <RiRulerLine size={20} className="translate-y-[-0.2rem]" />
+                <span>Bảng size</span>
+              </button>
             </div>
+            {selected.maxQty <= 10 && (
+              <span className="text-[#ff3548] text-[1.4rem] font-medium">{`Còn ${selected.maxQty} sản phẩm`}</span>
+            )}
             <ul className="grid grid-cols-4 gap-[1.6rem] mt-[0.8rem]">
               {variant?.sizes &&
                 variant.sizes.map(({ size, quantity }) => (

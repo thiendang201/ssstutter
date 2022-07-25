@@ -11,12 +11,12 @@ function Search({ handleSearch }) {
   useEffect(() => {
     async function getProducts() {
       const rs = await search(searchStr);
-      setProductList(rs);
+      setTimeout(() => {
+        setProductList(rs);
+      }, 260);
     }
 
-    setTimeout(() => {
-      getProducts();
-    }, 260);
+    getProducts();
   }, [searchStr]);
 
   const onChange = (e) => {
@@ -44,7 +44,7 @@ function Search({ handleSearch }) {
         <h2 className="text-[2rem] mt-[1rem] font-semibold">GỢI Ý CHO BẠN</h2>
 
         {!searchStr && productList.length === 0 && (
-          <div className="grid grid-cols-40 md:grid-cols-3 lg:grid-cols-4 p-[2rem] gap-[2rem]">
+          <div className="grid grid-cols-40 md:grid-cols-3 lg:grid-cols-4 py-[2rem] gap-[2rem]">
             <Loading />
             <Loading />
             <Loading />

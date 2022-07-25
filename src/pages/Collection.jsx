@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../components/product/Loading";
 import Product from "../components/product/Product";
 import {
@@ -13,6 +13,7 @@ const Collection = () => {
   const isMobile = window.innerWidth < 768;
   const { collectionId } = useParams();
   const [collection, setCollection] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -20,6 +21,7 @@ const Collection = () => {
         collectionId,
         collection?.products?.length || 0
       );
+      !rs?.id && navigate("../NotFound");
       setCollection(rs);
     }
     fetchData();

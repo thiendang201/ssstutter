@@ -191,6 +191,16 @@
   animation: scaleZ 300ms ease-in-out forwards;
 }
 
+.grow-up-exit {
+  max-height: 70vh;
+}
+.grow-up-exit-active {
+  max-height: 0;
+  transition: max-height 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+  transform-origin: top left;
+  /* animation: scaleZ 300ms ease-in-out forwards; */
+}
+
 @keyframes click {
   0%,
   100% {

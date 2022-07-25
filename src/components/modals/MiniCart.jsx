@@ -167,7 +167,7 @@ const MiniCart = forwardRef((props, ref) => {
         classNames="slide-up"
         unmountOnExit
       >
-        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12]">
+        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1]">
           <div className="flex justify-between items-center pr-[2rem] pl-[0.4rem] border-b border-[#f1f1f1]">
             <button className="py-[1.2rem] px-[1.6rem]" onClick={closeMiniCart}>
               <MdKeyboardBackspace size={32} />

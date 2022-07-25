@@ -30,7 +30,7 @@ const Layout = () => {
     }
 
     fetchData();
-  }, [openedSideNav]);
+  }, []);
 
   const handleSideNav = () => {
     setOpenedSideNav(!openedSideNav);

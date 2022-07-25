@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../components/product/Loading";
 import Product from "../components/product/Product";
 import {
@@ -22,34 +22,33 @@ const Sales = () => {
     saleId: salesId,
     cateId: -1,
     size: -1,
-    start: 0,
   });
   const saleRef = useRef({
     isComponentMounted: false,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      const rs = await getProductsSales(
+      const { products, total } = await getProductsSales(
         filter.saleId,
         filter.size,
         filter.cateId,
         0
       );
-      setSales((prev) => ({
-        ...prev,
-        total: rs.length,
-        products: rs,
-      }));
+
+      setSales((prev) => ({ ...prev, total, products }));
     }
     saleRef.current.isComponentMounted && fetchData();
-  }, [filter.cateId, filter.saleId, filter.size, filter.start]);
+  }, [filter.cateId, filter.saleId, filter.size]);
 
   useEffect(() => {
     async function fetchData() {
       Promise.all([getSales(salesId, 0), getCategory(), getSizes()]).then(
         (result) => {
           const [sales, categories, sizes] = result;
+          !sales?.id && navigate("../NotFound");
+
           setSales(sales);
           setSizes(sizes);
           setCateList(categories);
@@ -59,7 +58,7 @@ const Sales = () => {
     }
     fetchData();
     saleRef.current.isComponentMounted = true;
-  }, [salesId]);
+  }, [navigate, salesId]);
 
   const onChange = (type, value) => (e) => {
     setFilter({ ...filter, [type]: value });
@@ -70,7 +69,19 @@ const Sales = () => {
   const fetchMoreData = async () => {
     const hasMore = sales.products.length < sales.total;
     if (hasMore) {
-      setFilter({ ...filter, start: sales.products.length });
+      let { products } = await getProductsSales(
+        filter.saleId,
+        filter.size,
+        filter.cateId,
+        sales.products.length
+      );
+      const existsList = (sales?.product || []).map(({ id }) => id);
+      products = products.filter(({ id }) => !existsList.includes(id));
+
+      setSales({
+        ...sales,
+        products: [...(sales?.products || []), ...products],
+      });
     }
   };
 
