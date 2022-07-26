@@ -71,7 +71,7 @@ const ProductsPage = () => {
     }
 
     fetchData();
-  }, [cateId, parentId]);
+  }, [cateId, navigate, parentId]);
 
   useEffect(() => {
     async function fetchData() {

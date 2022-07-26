@@ -9,6 +9,7 @@ import { CSSTransition } from "react-transition-group";
 import Button from "../../shared/Button";
 import { Context } from "../Layout";
 import EmptyCart from "../../assets/images/EmptyCart.jpg";
+import NoImg from "../../assets/images/No_image.png";
 
 const MiniCart = forwardRef((props, ref) => {
   const loadItems = () => JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -125,9 +126,9 @@ const MiniCart = forwardRef((props, ref) => {
         setItems(items);
         break;
       default:
-        const { value } = e.target;
-        item.qty =
-          value * 1 <= item.maxQty ? Math.round(value * 1) : item.maxQty;
+        let { value } = e.target;
+        value = value.replace(/\D/g, "") * 1;
+        item.qty = value <= item.maxQty ? value : item.maxQty;
         setItems(items);
     }
   };
@@ -168,7 +169,7 @@ const MiniCart = forwardRef((props, ref) => {
         classNames="slide-up"
         unmountOnExit
       >
-        <div className="fixed inset-0 h-[100vh] md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1]">
+        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1]">
           <div className="flex justify-between items-center pr-[2rem] pl-[0.4rem] border-b border-[#f1f1f1]">
             <button className="py-[1.2rem] px-[1.6rem]" onClick={closeMiniCart}>
               <MdKeyboardBackspace size={32} />
@@ -211,7 +212,7 @@ const MiniCart = forwardRef((props, ref) => {
                           closeMiniCart();
                           window.scrollTo(0, 0);
                         }}
-                        style={{ backgroundImage: `url(${img_url})` }}
+                        style={{ backgroundImage: `url(${img_url || NoImg})` }}
                         className=" block pt-[100%] bg-center bg-no-repeat bg-cover group-hover:brightness-90 transition-all duration-300"
                       ></Link>
                     </div>
@@ -264,13 +265,13 @@ const MiniCart = forwardRef((props, ref) => {
                         <input
                           className="text-[1.6rem] font-semibold w-[5.6rem] border-x border-[#f1f1f1] outline-none text-center appearance-none"
                           type="number"
-                          value={(qty + "").replace(/^0*/g, "")}
+                          value={(qty + "").replace(/[^1-9]/g, "")}
                           onChange={onChange("", variantId, size)}
                           onBlur={onBlur(variantId, size)}
-                          onKeyDown={(e) =>
-                            [".", "-"].includes(e.key) && e.preventDefault()
-                          }
-                          min={0}
+                          onKeyPress={(e) => {
+                            ["Period", "Minus"].includes(e.code) &&
+                              e.preventDefault();
+                          }}
                         />
                         <button
                           onClick={onChange("increase", variantId, size)}
@@ -295,7 +296,7 @@ const MiniCart = forwardRef((props, ref) => {
               )
             )}
           </ul>
-          <div className="absolute bottom-0 left-0 right-0 p-[2rem]">
+          <div className="absolute bottom-0 left-0 right-0 bg-white p-[2rem]">
             <div className="font-semibold text-[1.6rem] flex justify-between">
               <span>Tổng:</span>
               <div>

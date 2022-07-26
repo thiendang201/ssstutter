@@ -20,7 +20,7 @@ import HerSize from "../assets/images/HerSize.jpg";
 import SizeChart from "../components/modals/SizeChart";
 
 const ProductDetails = () => {
-  const { addToCart, openOverlay, closeOverlay } = useContext(Context);
+  const { addToCart, openOverlay } = useContext(Context);
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [products, setProducts] = useState([]);
