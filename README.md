@@ -1,6 +1,6 @@
 # Clone SSSTUTTER
 An e-commerce web app cloned from [ssstutter](https://ssstutter.com/) built with ReactJs, TailwindCSS, FastAPI and more.
-**Live Demo:** https://ssstutter-clone.herokuapp.com/
+## Live Demo: https://ssstutter-clone.herokuapp.com/
 ## Main technologies
 - Frond-End
   - ReactJs
