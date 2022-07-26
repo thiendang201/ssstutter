@@ -115,7 +115,7 @@ const MiniCart = forwardRef((props, ref) => {
         setItems(items);
         break;
       case "decrease":
-        if (item.qty === 1) {
+        if (item.qty <= 1) {
           confirmRemove(variantId, size)();
           break;
         }
@@ -126,7 +126,8 @@ const MiniCart = forwardRef((props, ref) => {
         break;
       default:
         const { value } = e.target;
-        item.qty = value * 1 <= item.maxQty ? value * 1 : item.maxQty;
+        item.qty =
+          value * 1 <= item.maxQty ? Math.round(value * 1) : item.maxQty;
         setItems(items);
     }
   };
@@ -167,7 +168,7 @@ const MiniCart = forwardRef((props, ref) => {
         classNames="slide-up"
         unmountOnExit
       >
-        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1]">
+        <div className="fixed inset-0 h-[100vh] md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1]">
           <div className="flex justify-between items-center pr-[2rem] pl-[0.4rem] border-b border-[#f1f1f1]">
             <button className="py-[1.2rem] px-[1.6rem]" onClick={closeMiniCart}>
               <MdKeyboardBackspace size={32} />
