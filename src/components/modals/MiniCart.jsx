@@ -169,7 +169,7 @@ const MiniCart = forwardRef((props, ref) => {
         classNames="slide-up"
         unmountOnExit
       >
-        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1]">
+        <div className="fixed inset-0 md:left-[50%] md:top-[5.8rem] md:bottom-[30%] lg:left-[66%] lg:bottom-0 bg-white z-[12] border-l border-[#f1f1f1] flex flex-col">
           <div className="flex justify-between items-center pr-[2rem] pl-[0.4rem] border-b border-[#f1f1f1]">
             <button className="py-[1.2rem] px-[1.6rem]" onClick={closeMiniCart}>
               <MdKeyboardBackspace size={32} />
@@ -177,18 +177,18 @@ const MiniCart = forwardRef((props, ref) => {
             <h2 className="font-semibold text-[1.8rem]">Giỏ hàng</h2>
           </div>
           {cartItems.length === 0 && (
-            <div className="flex flex-col items-center md:mt-[6rem]">
+            <div className="flex flex-col items-center md:mt-[6rem] mb-auto">
               <img
                 src={EmptyCart}
                 alt="empty-cart"
                 className="md:max-w-[50%]"
               />
-              <h2 className="font-semibold text-[1.6rem] text-center">
+              <h2 className="font-semibold text-[1.6rem] text-center ">
                 Không có sản phẩm nào!
               </h2>
             </div>
           )}
-          <ul className="p-[2rem] overflow-y-auto max-h-[72%] lg:max-h-[60%] lg:scrollbar">
+          <ul className="p-[2rem] overflow-y-auto max-h-[72%] lg:max-h-[60%] lg:scrollbar mb-auto">
             {cartItems.map(
               ({
                 productId,
@@ -219,12 +219,12 @@ const MiniCart = forwardRef((props, ref) => {
                         className=" block pt-[100%] bg-center bg-no-repeat bg-cover group-hover:brightness-90 transition-all duration-300"
                       ></Link>
                     </div>
-                    <div className="relative">
+                    <div className="relative translate-y-[-0.6rem]">
                       <h2 className="font-semibold text-[1.6rem]">{name}</h2>
                       <p className="text-[1.3rem]">
                         {color + ", size: " + size}
                       </p>
-                      <div className="text-[1.8rem] md:flex gap-[0.4rem] items-center tracking-wide">
+                      <div className="text-[1.4rem] font-semibold md:flex gap-[0.4rem] items-center tracking-wide">
                         <p>
                           <NumberFormat
                             thousandsGroupStyle="thousand"
@@ -253,10 +253,10 @@ const MiniCart = forwardRef((props, ref) => {
                         )}
                       </div>
                       {maxQty <= 10 && (
-                        <p className="text-[#ff3548] text-[1.4rem] font-medium">{`Còn ${maxQty} sản phẩm`}</p>
+                        <p className="text-[#ff3548] text-[1.3rem] font-medium">{`Còn ${maxQty} sản phẩm`}</p>
                       )}
                       {maxQty > 10 && (
-                        <p className="text-[1.4rem] font-medium">{`Kho: ${maxQty}`}</p>
+                        <p className="text-[1.3rem] font-medium">{`Kho: ${maxQty}`}</p>
                       )}
                       <div className="inline-flex items-strength mt-[1rem] border border-[#f1f1f1] rounded-[0.6rem]">
                         <button
@@ -300,7 +300,7 @@ const MiniCart = forwardRef((props, ref) => {
               )
             )}
           </ul>
-          <div className="absolute bottom-0 border-t border-[#f1f1f1] left-0 right-0 bg-white p-[2rem]">
+          <div className="border-t border-[#f1f1f1] bg-white p-[2rem]">
             <div className="font-semibold text-[1.6rem] flex justify-between">
               <span>Tổng:</span>
               <div>
