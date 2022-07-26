@@ -188,7 +188,7 @@ const MiniCart = forwardRef((props, ref) => {
               </h2>
             </div>
           )}
-          <ul className="px-[2rem] pt-[3rem] pb-[1rem] overflow-y-auto max-h-[72%] lg:max-h-[60%] lg:scrollbar">
+          <ul className="p-[2rem] overflow-y-auto max-h-[72%] lg:max-h-[60%] lg:scrollbar">
             {cartItems.map(
               ({
                 productId,
@@ -202,7 +202,10 @@ const MiniCart = forwardRef((props, ref) => {
                 variantId,
                 maxQty,
               }) => (
-                <li key={productId + color + size} className="mt-[2.4rem]">
+                <li
+                  key={productId + color + size}
+                  className="pt-[2.4rem] first:pt-0 last:pb-[1rem]"
+                >
                   <div className="grid grid-cols-[8rem_1fr] gap-[1.4rem]">
                     <div>
                       <Link
@@ -265,12 +268,13 @@ const MiniCart = forwardRef((props, ref) => {
                         <input
                           className="text-[1.6rem] font-semibold w-[5.6rem] border-x border-[#f1f1f1] outline-none text-center appearance-none"
                           type="number"
-                          value={(qty + "").replace(/[^1-9]/g, "")}
+                          value={(qty + "").replace(/^0*/g, "")}
                           onChange={onChange("", variantId, size)}
                           onBlur={onBlur(variantId, size)}
-                          onKeyPress={(e) => {
-                            ["Period", "Minus"].includes(e.code) &&
-                              e.preventDefault();
+                          onKeyDown={(e) => {
+                            const key = e.nativeEvent.key;
+                            [".", "-"].includes(key) &&
+                              e.nativeEvent.preventDefault();
                           }}
                         />
                         <button
@@ -296,7 +300,7 @@ const MiniCart = forwardRef((props, ref) => {
               )
             )}
           </ul>
-          <div className="absolute bottom-0 left-0 right-0 bg-white p-[2rem]">
+          <div className="absolute bottom-0 border-t border-[#f1f1f1] left-0 right-0 bg-white p-[2rem]">
             <div className="font-semibold text-[1.6rem] flex justify-between">
               <span>Tổng:</span>
               <div>
