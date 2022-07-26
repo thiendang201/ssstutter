@@ -184,9 +184,8 @@ const ProductsPage = () => {
     });
   };
 
-  const onFilterClick = ({ target: { parentNode } }) => {
-    parentNode =
-      parentNode.type !== "button" ? parentNode : parentNode.parentNode;
+  const onFilterClick = ({ target: { parentNode, nodeName } }) => {
+    if (nodeName !== "BUTTON") parentNode = parentNode.parentNode;
     parentNode.classList.toggle("max-h-[60vh]");
     parentNode.classList.toggle("max-h-[5.8rem]");
     parentNode.classList.toggle("overflow-visible");

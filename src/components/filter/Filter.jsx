@@ -161,7 +161,7 @@ const Filter = ({
             <div key={index} className="relative">
               <input
                 id={`sort${value}`}
-                type="radio"
+                type="checkbox"
                 className="appearance-none peer absolute"
                 value={value}
                 name="sort"
