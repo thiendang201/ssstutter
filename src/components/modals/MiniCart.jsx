@@ -299,7 +299,7 @@ const MiniCart = forwardRef((props, ref) => {
               )
             )}
           </ul>
-          <div className="border-t border-[#f1f1f1] bg-white p-[2rem]">
+          <div className="bg-white p-[2rem]">
             <div className="font-semibold text-[1.6rem] flex justify-between">
               <span>Tổng:</span>
               <div>

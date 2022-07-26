@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import HimSize from "../../assets/images/HimSize.jpg";
 import Button from "../../shared/Button";
+import { capitalize } from "../../utils/capitalizeString";
 
 const SizeChart = ({ list }) => {
   const [sizeChart, setSizeChart] = useState({
@@ -18,7 +19,7 @@ const SizeChart = ({ list }) => {
               setSizeChart({ gender, img });
             }}
             key={gender}
-            text={gender}
+            text={capitalize(gender)}
             type={gender === sizeChart.gender ? "" : "outline"}
           />
         ))}
