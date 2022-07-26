@@ -224,7 +224,7 @@ const MiniCart = forwardRef((props, ref) => {
                       <p className="text-[1.3rem]">
                         {color + ", size: " + size}
                       </p>
-                      <div className="text-[1.4rem] font-semibold md:flex gap-[0.4rem] items-center tracking-wide">
+                      <div className="text-[1.4rem] font-semibold flex gap-[0.4rem] items-center tracking-wide">
                         <p>
                           <NumberFormat
                             thousandsGroupStyle="thousand"
@@ -238,7 +238,7 @@ const MiniCart = forwardRef((props, ref) => {
                         {salePrice !== 0 && (
                           <p
                             style={{ color: "#aeaeae" }}
-                            className="line-through mt-[-0.4rem] md:mt-0 text-[1.4rem]"
+                            className="line-through md:mt-0 text-[1.4rem]"
                           >
                             <NumberFormat
                               thousandsGroupStyle="thousand"
