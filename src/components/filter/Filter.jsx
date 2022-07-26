@@ -30,7 +30,7 @@ const Filter = ({
                 displayType="text"
                 thousandSeparator={true}
               />
-              <span className="text-[2rem]">₫</span>
+              <span className="text-[1.4rem] md:text-[2rem]">₫</span>
               {" đến "}
               <NumberFormat
                 thousandsGroupStyle="thousand"
@@ -41,7 +41,7 @@ const Filter = ({
                 displayType="text"
                 thousandSeparator={true}
               />
-              <span className="text-[2rem]">₫</span>
+              <span className="text-[1.4rem] md:text-[2rem]">₫</span>
             </>
           ) : (
             <>
@@ -107,7 +107,7 @@ const Filter = ({
                 />
                 <label
                   htmlFor={`color${id}`}
-                  className="peer-checked:bg-stone-100 h-[100%] transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
+                  className="peer-checked:bg-black peer-checked:text-white h-[100%] transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
                 >
                   {name}
                 </label>
@@ -138,7 +138,7 @@ const Filter = ({
               />
               <label
                 htmlFor={`size${size}`}
-                className="peer-checked:bg-stone-100 transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
+                className="peer-checked:bg-black peer-checked:text-white transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
               >
                 {size}
               </label>
@@ -170,7 +170,7 @@ const Filter = ({
               />
               <label
                 htmlFor={`sort${value}`}
-                className="peer-checked:bg-stone-100 transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
+                className="peer-checked:bg-black peer-checked:text-white transition-all duration-300 border border-[#ececec] rounded-[0.4rem] text-center py-[1.4rem] block"
               >
                 {text}
               </label>

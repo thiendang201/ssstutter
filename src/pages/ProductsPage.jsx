@@ -185,11 +185,11 @@ const ProductsPage = () => {
   };
 
   const onFilterClick = ({ target: { parentNode } }) => {
+    parentNode =
+      parentNode.type !== "button" ? parentNode : parentNode.parentNode;
     parentNode.classList.toggle("max-h-[60vh]");
     parentNode.classList.toggle("max-h-[5.8rem]");
-    if (parentNode.classList.contains("overflow-visible"))
-      parentNode.classList.remove("overflow-visible");
-    else parentNode.classList.add("overflow-visible");
+    parentNode.classList.toggle("overflow-visible");
   };
 
   const loading = (
@@ -238,7 +238,7 @@ const ProductsPage = () => {
           ))}
         </ul>
       </div>
-      <div className="lg:hidden flex justify-between px-[2rem] py-[1rem] fixed top-[5.8rem] left-0 right-0 z-10 bg-white ">
+      <div className="lg:hidden flex justify-between px-[2rem] py-[1rem] fixed top-[5.8rem] left-0 right-0 z-[3] bg-white ">
         <div className="relative">
           <button
             onClick={handleCategory}

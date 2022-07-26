@@ -311,7 +311,6 @@ const ProductDetails = () => {
         <Swiper
           slidesPerView={(windowWidth / 220).toFixed() * 1 + 0.2}
           spaceBetween={windowWidth < 768 ? 10 : 20}
-          mousewheel
         >
           {products.map((product) => (
             <SwiperSlide key={product.id}>

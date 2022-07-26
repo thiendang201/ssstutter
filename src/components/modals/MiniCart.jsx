@@ -266,6 +266,10 @@ const MiniCart = forwardRef((props, ref) => {
                           value={(qty + "").replace(/^0*/g, "")}
                           onChange={onChange("", variantId, size)}
                           onBlur={onBlur(variantId, size)}
+                          onKeyDown={(e) =>
+                            [".", "-"].includes(e.key) && e.preventDefault()
+                          }
+                          min={0}
                         />
                         <button
                           onClick={onChange("increase", variantId, size)}
