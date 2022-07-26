@@ -26,3 +26,7 @@ An e-commerce web app cloned from [ssstutter](https://ssstutter.com/) built with
 - infinite scroll
 - Responsive
 ## Previews
+![Weekly Best](/src/assets/images/demo_weekly_best.png)
+![Weekly Best](/src/assets/images/demo_search.png)
+![Weekly Best](/src/assets/images/demo_filter.png)
+![Weekly Best](/src/assets/images/demo_detail.png)
