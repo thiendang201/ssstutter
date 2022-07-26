@@ -232,9 +232,8 @@ const MiniCart = forwardRef((props, ref) => {
                             decimalSeparator="."
                             displayType="text"
                             thousandSeparator={true}
-                          />
-
-                          <span className="text-[1.8rem]">₫</span>
+                          />{" "}
+                          <span className="text-[1.4rem]">₫</span>
                         </p>
                         {salePrice !== 0 && (
                           <p
@@ -248,7 +247,7 @@ const MiniCart = forwardRef((props, ref) => {
                               decimalSeparator="."
                               thousandSeparator={true}
                             />{" "}
-                            <span className="text-[1.8rem]">₫</span>
+                            <span className="text-[1.4rem]">₫</span>
                           </p>
                         )}
                       </div>
