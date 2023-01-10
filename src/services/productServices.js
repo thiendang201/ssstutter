@@ -1,7 +1,7 @@
-import { BASE_URL } from "../config";
-import { getData } from "./services";
+import { BASE_URL } from '../config';
+import { getData } from './services';
 
-function search(searchStr = "", limit = 4) {
+function search(searchStr = '', limit = 4) {
   const url =
     BASE_URL + `products/search?searchStr=${searchStr.trim()}&limit=${limit}`;
   return getData(url);
@@ -9,14 +9,14 @@ function search(searchStr = "", limit = 4) {
 
 function filterProducts(filter) {
   const url = BASE_URL + `products/filter`;
-  return getData(url, "post", filter);
+  return getData(url, 'post', filter);
 }
 function getColors() {
-  const url = BASE_URL + `colors`;
+  const url = BASE_URL + `color`;
   return getData(url);
 }
 function getSizes() {
-  const url = BASE_URL + `sizes`;
+  const url = BASE_URL + `size`;
   return getData(url);
 }
 
@@ -37,7 +37,7 @@ function getWeeklyBestProducts(limit = 4, cateId = 0) {
 }
 
 function getDetail(productId = 0) {
-  const url = BASE_URL + `product/detail?productId=${productId}`;
+  const url = BASE_URL + `products/detail?productId=${productId}`;
   return getData(url);
 }
 
@@ -49,5 +49,5 @@ export {
   getSizes,
   getColors,
   getMaxPrice,
-  getDetail,
+  getDetail
 };

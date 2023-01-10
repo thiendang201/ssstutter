@@ -1,5 +1,5 @@
-import { BASE_URL } from "../config";
-import { getData } from "./services";
+import { BASE_URL } from '../config';
+import { getData } from './services';
 
 function getMenu() {
   const url = BASE_URL + `menu`;
@@ -7,17 +7,17 @@ function getMenu() {
 }
 
 function getCategory() {
-  const url = BASE_URL + `category`;
+  const url = BASE_URL + `categories`;
   return getData(url);
 }
 
 function getCategoryInfo(cateId) {
-  const url = BASE_URL + `category/detail?cateId=${cateId}`;
+  const url = BASE_URL + `categories/detail?cateId=${cateId}`;
   return getData(url);
 }
 
 function getChildrenCategories(parentsId) {
-  const url = BASE_URL + `category/children?parentsId=${parentsId}`;
+  const url = BASE_URL + `categories/children?parentsId=${parentsId}`;
   return getData(url);
 }
 
