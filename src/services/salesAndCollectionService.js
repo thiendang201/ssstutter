@@ -1,5 +1,5 @@
-import { BASE_URL } from "../config";
-import { getData } from "./services";
+import { BASE_URL } from '../config';
+import { getData } from './services';
 
 function getBanner() {
   const url = BASE_URL + `banner`;
@@ -20,7 +20,7 @@ function getProductsSales(salesId, size, cateId, start) {
 
 function getCollection(collectionId, start) {
   const url =
-    BASE_URL + `collection?collectionId=${collectionId}&start=${start}`;
+    BASE_URL + `collections?collectionId=${collectionId}&start=${start}`;
   return getData(url);
 }
 
@@ -35,5 +35,5 @@ export {
   getSales,
   getProductsSales,
   getCollection,
-  getProductsCollection,
+  getProductsCollection
 };

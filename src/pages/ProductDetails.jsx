@@ -296,13 +296,14 @@ const ProductDetails = () => {
       </div>
       <div className='md:col-end-3 md:col-span-2 mt-[3rem] px-[2rem]'>
         <h2 className='font-semibold text-[2.4rem] text-center'>CHI TIẾT</h2>
-        <p
+        <div
           className={`py-[2rem] text-[1.6rem] ${
             product.description ? '' : 'text-center'
           }`}
-        >
-          {product.description || 'Chưa có mô tả'}
-        </p>
+          dangerouslySetInnerHTML={{
+            __html: product.description ?? 'Chưa có mô tả'
+          }}
+        ></div>
       </div>
       <div className='mt-[3rem] px-[2rem] md:col-end-4 md:col-span-3'>
         <h2 className='font-semibold text-[2rem] mb-[1.2rem]'>
